@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>星辰导航 · 高考志愿规划</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap');
+:root{--bg-deep:#05051a;--bg-card:rgba(15,23,62,.85);--accent:#00e5ff;--accent2:#7c4dff;--accent3:#00ffb4;--gold:#ffd740;--text:#e8eaf6;--text-dim:#9fa8da;--danger:#ff5252;--success:#69f0ae}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{-webkit-text-size-adjust:100%}body{font-family:"Noto Sans SC",sans-serif;background:var(--bg-deep);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+#starfield{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:.2;transform:scale(.8)}100%{opacity:1;transform:scale(1.2)}}
+.shooting-star{position:fixed;width:120px;height:2px;background:linear-gradient(90deg,rgba(0,229,255,0),#00e5ff,#fff);border-radius:50%;animation:shoot 1.8s ease-out infinite;opacity:0;z-index:0}
+@keyframes shoot{0%{transform:translateX(0) translateY(0) rotate(-35deg);opacity:1}100%{transform:translateX(-400px) translateY(200px) rotate(-35deg);opacity:0}}
+.main-wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:40px 20px 80px}
+.hero{text-align:center;padding:60px 0 40px}.hero-badge{display:inline-block;padding:6px 20px;border:1px solid var(--accent);border-radius:20px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;animation:pulse-border 2s ease-in-out infinite}
+@keyframes pulse-border{0%,100%{box-shadow:0 0 8px rgba(0,229,255,.3)}50%{box-shadow:0 0 20px rgba(0,229,255,.6)}}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(36px,7vw,64px);font-weight:900;background:linear-gradient(135deg,#00e5ff 0%,#7c4dff 50%,#ffd740 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:16px}
+.hero p{font-size:16px;color:var(--text-dim);line-height:1.8;max-width:520px;margin:0 auto}.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}.hero-tag{padding:5px 14px;border-radius:14px;font-size:12px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--accent)}
+.progress-wrap{margin:30px 0 40px}.progress-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);margin-bottom:8px}.progress-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .6s cubic-bezier(.4,0,.2,1);position:relative}
+.progress-fill::after{content:'';position:absolute;right:0;top:-3px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse-dot 1.5s ease-in-out infinite}@keyframes pulse-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.card{background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid rgba(124,77,255,.2);border-radius:20px;padding:36px 32px;margin-bottom:28px;position:relative;overflow:hidden;animation:cardIn .5s ease-out}@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent3))}
+.card-step{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}.card-title{font-size:22px;font-weight:700;margin-bottom:6px}.card-desc{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:24px}
+.scenario-block{margin-bottom:28px}.scenario-q{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.6}.scenario-q-num{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:rgba(124,77,255,.2);border:1px solid rgba(124,77,255,.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent2)}
+.scenario-opts{display:flex;flex-direction:column;gap:8px}.scenario-opt{padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.07);cursor:pointer;transition:all .2s;font-size:13px;line-height:1.6;font-family:inherit;color:var(--text);text-align:left;width:100%;-webkit-user-select:none;user-select:none}.scenario-opt:active{transform:scale(.98);background:rgba(124,77,255,.12)}.scenario-opt:hover{border-color:rgba(124,77,255,.4);background:rgba(124,77,255,.07)}.scenario-opt.selected{border-color:var(--accent);background:rgba(0,229,255,.08);box-shadow:0 0 12px rgba(0,229,255,.1)}
+.sopt-letter{display:inline-flex;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.08);text-align:center;line-height:22px;font-size:11px;font-weight:700;margin-right:8px;flex-shrink:0;align-items:center;justify-content:center}.scenario-opt.selected .sopt-letter{background:var(--accent);color:#05051a}
+.q-dots{display:flex;gap:6px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}.q-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s}.q-dot.done{background:var(--accent2);box-shadow:0 0 6px rgba(124,77,255,.5)}
+.scene-group{margin-bottom:20px}.scene-group-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}.scene-group-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.tag-options{display:flex;flex-wrap:wrap;gap:10px}.tag-btn{padding:10px 18px;border-radius:25px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);color:var(--text);font-size:13px;cursor:pointer;transition:all .2s;font-family:inherit;-webkit-user-select:none;user-select:none}.tag-btn:active{transform:scale(.95)}.tag-btn:hover{border-color:var(--accent2)}.tag-btn.selected{background:rgba(124,77,255,.25);border-color:var(--accent2);color:#fff;box-shadow:0 0 12px rgba(124,77,255,.3)}.tag-btn.rejected{background:rgba(255,82,82,.15);border-color:var(--danger);color:var(--danger);text-decoration:line-through;opacity:.7}
+.tag-hint{display:block;font-size:11px;color:var(--text-dim);margin-top:3px;font-weight:300;line-height:1.4}.tag-btn.selected .tag-hint{color:rgba(255,255,255,.7)}
+.tag-card-options{display:flex;flex-wrap:wrap;gap:10px}.tag-card{padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:all .2s;font-family:inherit;color:var(--text);text-align:left;width:calc(50% - 5px);min-width:200px;position:relative;-webkit-user-select:none;user-select:none}.tag-card:active{transform:scale(.97)}.tag-card:hover{border-color:rgba(124,77,255,.4);background:rgba(124,77,255,.06)}.tag-card.selected{border-color:var(--accent);background:rgba(0,229,255,.08);box-shadow:0 0 12px rgba(0,229,255,.1)}.tag-card.rejected{border-color:var(--danger);background:rgba(255,82,82,.08);opacity:.6}
+.tag-card-name{font-size:13px;font-weight:600;margin-bottom:3px}.tag-card-hint{font-size:11px;color:var(--text-dim);line-height:1.4}.tag-card.selected .tag-card-hint{color:rgba(255,255,255,.6)}.tag-card .reject-mark{display:none;font-size:10px;color:var(--danger);margin-top:4px}.tag-card.rejected .reject-mark{display:block}
+.sub-label{font-size:12px;color:var(--text-dim);margin-top:24px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.sub-label::before{content:'\2715';color:var(--danger);font-weight:700}
+.value-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:22px 24px;margin-bottom:18px;transition:border-color .25s}.value-card:hover{border-color:rgba(124,77,255,.25)}.value-card-title{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}.value-card-desc{font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px}.value-card-anchors{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:10px}
+.val-slider-row{display:flex;align-items:center;gap:14px;margin-bottom:4px}.val-slider-row input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:4px;outline:none;cursor:pointer;background:linear-gradient(90deg,#7c4dff 0%,#00e5ff 100%);opacity:.65;transition:opacity .2s}.val-slider-row input[type=range]:hover{opacity:.9}
+.val-slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--accent2);box-shadow:0 0 12px rgba(124,77,255,.5);cursor:pointer}.val-slider-row input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.1)}
+.val-slider-row input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--accent2);box-shadow:0 0 12px rgba(124,77,255,.5);cursor:pointer}
+.val-num{display:inline-block;min-width:44px;text-align:center;font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.val-label-text{font-size:11px;color:var(--text-dim);text-align:right;margin-top:6px;font-style:italic}
+.input-wrap{margin-bottom:16px}.input-label{font-size:13px;color:var(--text-dim);margin-bottom:8px;display:block}.text-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;color:var(--text);font-size:16px;font-family:inherit;transition:border-color .2s;outline:none}.text-input:focus{border-color:var(--accent)}.text-input::placeholder{color:rgba(255,255,255,.2)}select.text-input{cursor:pointer}select.text-input option{background:#1a1a3e;color:var(--text)}
+.nav-btns{display:flex;gap:14px;margin-top:32px;justify-content:space-between}.btn{padding:14px 32px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+.btn-back{background:rgba(255,255,255,.06);color:var(--text-dim);border:1.5px solid rgba(255,255,255,.1)}.btn-back:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.btn-next{background:linear-gradient(135deg,var(--accent2),#6c3dd1);color:#fff;margin-left:auto;box-shadow:0 4px 20px rgba(124,77,255,.4)}.btn-next:hover{box-shadow:0 6px 28px rgba(124,77,255,.6);transform:translateY(-1px)}.btn-next:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#00bfa5);color:#05051a;font-weight:700;box-shadow:0 4px 20px rgba(0,229,255,.3)}.btn-primary:hover{box-shadow:0 6px 28px rgba(0,229,255,.5);transform:translateY(-1px)}
+.result-header{text-align:center;padding:20px 0 30px}.result-avatar{width:80px;height:80px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 0 30px rgba(124,77,255,.5);animation:pulse-glow 2s ease-in-out infinite}@keyframes pulse-glow{0%,100%{box-shadow:0 0 30px rgba(124,77,255,.5)}50%{box-shadow:0 0 50px rgba(0,229,255,.6)}}
+.result-name{font-size:26px;font-weight:700;margin-bottom:6px}.result-type{font-size:14px;color:var(--accent);font-weight:500;letter-spacing:1px}.result-desc{font-size:14px;color:var(--text-dim);line-height:1.8;max-width:560px;margin:12px auto 0}
+.rec-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:16px;transition:all .25s;position:relative;overflow:hidden}.rec-card:hover{border-color:rgba(0,229,255,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}.rec-rank{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.rec-major{font-size:18px;font-weight:700;margin-bottom:4px}.rec-school{font-size:13px;color:var(--accent3);margin-bottom:10px}.rec-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-dim);margin-bottom:12px}.rec-meta span{display:flex;align-items:center;gap:4px}.rec-tags{display:flex;gap:8px;flex-wrap:wrap}.rec-tag{padding:3px 10px;border-radius:10px;font-size:11px;background:rgba(0,229,255,.1);color:var(--accent)}.rec-reason{font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}
+.score-match{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:12px;margin-top:12px;font-size:13px}
+.industry-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start}.industry-icon{width:48px;height:48px;flex-shrink:0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}.industry-name{font-size:15px;font-weight:600;margin-bottom:4px}.industry-desc{font-size:12px;color:var(--text-dim);line-height:1.6}.industry-trend{display:inline-block;margin-top:8px;padding:2px 10px;border-radius:8px;font-size:11px;font-weight:600}.trend-up{background:rgba(105,240,174,.15);color:var(--success)}.trend-stable{background:rgba(255,215,64,.15);color:var(--gold)}
+.result-section{margin-bottom:32px}.result-section-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}.result-section-title .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.trait-bars{display:flex;flex-direction:column;gap:14px}.trait-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.trait-bar-name{color:var(--text-dim)}.trait-bar-val{font-weight:600;color:var(--accent)}.trait-bar-track{height:6px;border-radius:3px;background:rgba(255,255,255,.06)}.trait-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.hidden{display:none!important}.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:12px 28px;border-radius:12px;background:rgba(124,77,255,.95);color:#fff;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);z-index:999;animation:toastIn .3s ease-out;pointer-events:none}@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.restart-wrap{text-align:center;padding:30px 0}@keyframes loadAnim{0%{width:0}30%{width:40%}60%{width:70%}100%{width:100%}}
+/* ===== Mobile-first ===== */
+@media(max-width:840px){
+.main-wrap{padding:24px 14px 110px}
+.card{margin-bottom:16px;padding-bottom:20px}
+.hero{padding:40px 0 28px}
+.hero h1{font-size:clamp(32px,8vw,48px)}
+.hero p{font-size:14px}
+.card{padding:24px 16px;border-radius:16px}
+.card-title{font-size:18px}
+.card-desc{font-size:13px}
+.card-step{font-size:10px}
+/* Step 0 feature cards stack */
+.step0-features{flex-direction:column!important}
+.step0-features>div{min-width:unset!important}
+/* Scenario questions */
+.scenario-q{font-size:14px;gap:8px}
+.scenario-opt{padding:11px 14px;font-size:13px;line-height:1.5;border-radius:10px}
+.sopt-letter{width:20px;height:20px;line-height:20px;font-size:10px;margin-right:6px}
+.scenario-q-num{width:24px;height:24px;font-size:11px}
+/* Tag buttons */
+.tag-btn{padding:8px 14px;font-size:12px;border-radius:20px}
+.tag-hint{font-size:10px}
+/* Tag cards - single column on mobile */
+.tag-card{width:100%!important;min-width:unset!important;padding:10px 14px}
+/* Value cards */
+.value-card{padding:16px 14px;border-radius:12px}
+.value-card-title{font-size:14px}
+.value-card-desc{font-size:11px;margin-bottom:10px}
+.value-card-anchors{font-size:10px}
+/* Slider - bigger thumb for touch */
+.val-slider-row input[type=range]{height:10px}
+.val-slider-row input[type=range]::-webkit-slider-thumb{width:30px;height:30px;border-width:3px}
+.val-slider-row input[type=range]::-moz-range-thumb{width:30px;height:30px;border-width:3px}
+.val-num{font-size:18px;min-width:38px}
+.val-label-text{font-size:10px}
+/* Buttons - full width, taller for thumb */
+.nav-btns{position:sticky;bottom:0;z-index:50;display:flex;gap:10px;padding:14px 0 4px;background:linear-gradient(0deg,rgba(10,8,40,.97) 70%,rgba(10,8,40,0));flex-direction:row;margin-top:20px}
+.btn{width:100%;justify-content:center;padding:15px 20px;font-size:15px;border-radius:12px;min-height:50px}
+.btn-back{flex:0 0 auto;width:auto;padding:15px 18px}
+.btn-next{margin-left:0;flex:1}
+.btn-primary{flex:1}
+/* Text input */
+.text-input{padding:13px 14px;font-size:16px;border-radius:10px}
+/* Progress */
+.progress-wrap{margin:20px 0 28px}
+/* Result page */
+.result-name{font-size:22px}
+.result-desc{font-size:13px}
+.rec-card{padding:18px;border-radius:12px}
+.rec-major{font-size:16px}
+.rec-school{font-size:12px}
+.rec-meta{font-size:11px;gap:10px}
+.rec-reason{font-size:12px}
+.rec-rank{width:28px;height:28px;font-size:12px;top:12px;right:12px}
+.score-match{padding:10px 12px;font-size:12px;gap:8px}
+.industry-card{padding:14px;border-radius:12px;gap:12px}
+.industry-icon{width:40px;height:40px;font-size:18px;border-radius:10px}
+.industry-name{font-size:14px}
+.industry-desc{font-size:11px}
+.result-section-title{font-size:15px}
+.trait-bar-label{font-size:12px}
+/* Scene group */
+.scene-group-title{font-size:10px;letter-spacing:1.5px}
+/* Sub-label */
+.sub-label{font-size:11px;margin-top:18px;margin-bottom:6px}
+/* Toast */
+.toast{bottom:max(80px,calc(12px + env(safe-area-inset-bottom)));font-size:13px;padding:10px 22px}
+/* q-dots */
+.q-dot{width:7px;height:7px}
+/* Restart */
+.restart-wrap{padding:20px 0 40px}
+/* Result page mobile */
+#result-page .nav-btns,.result-section .nav-btns{position:static}
+.result-section{margin-bottom:20px}
+.result-header{padding:12px 0 20px}
+.result-avatar{width:64px;height:64px;font-size:28px}
+.trait-bar-track{height:5px}
+}
+</style>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+<body>
+<div id="starfield"></div>
+<div class="shooting-star" style="top:8%;left:75%;animation-delay:1.2s"></div>
+<div class="shooting-star" style="top:25%;left:85%;animation-delay:4.5s"></div>
+<div class="shooting-star" style="top:5%;left:60%;animation-delay:7.8s"></div>
+<div class="main-wrap">
+<div class="hero"><div class="hero-badge">✦ AI 高考志愿规划系统</div><h1>星辰导航</h1><p>为你量身定制未来十年志愿方案<br>性格测评 × 行业前景 × 分数匹配 × 全国覆盖</p><div class="hero-tags"><span class="hero-tag">全国31省</span><span class="hero-tag">全分数段</span><span class="hero-tag">12种选科组合</span><span class="hero-tag">未来10年展望</span><div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;gap:6px"><span id="busuanzi_container_site_pv">👁️ 已有 <span id="busuanzi_value_site_pv">-</span> 人次使用</span></div>
+</div></div>
+<div class="progress-wrap"><div class="progress-labels"><span id="progressLabel">准备开始</span><span id="progressPct">0%</span></div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div></div>
+<div class="card" id="step-0"><div class="card-step">准备就绪</div><div class="card-title">你好，未来的大学生 👋</div><div class="card-desc">本测试约需 5 分钟，用生活化的小问题认识你，再结合行业趋势推荐最适合的专业和院校。</div>
+<div class="step0-features" style="display:flex;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(124,77,255,.1);border:1px solid rgba(124,77,255,.2)"><div style="font-size:24px;margin-bottom:8px">💬</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">生活化题目</div><div style="font-size:12px;color:var(--text-dim)">没有抽象概念，用日常小事找到你的特点</div></div>
+<div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2)"><div style="font-size:24px;margin-bottom:8px">🚀</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">行业前景</div><div style="font-size:12px;color:var(--text-dim)">未来10年高潜力行业深度分析</div></div>
+<div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(0,255,180,.1);border:1px solid rgba(0,255,180,.2)"><div style="font-size:24px;margin-bottom:8px">🎯</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">志愿推荐</div><div style="font-size:12px;color:var(--text-dim)">结合分数精准推荐院校专业</div></div></div>
+<div class="nav-btns" style="justify-content:flex-end"><button class="btn btn-next" id="startBtn">开始测评 →</button></div></div>
+<div class="card hidden" id="step-1"><div class="card-step">第一步 · 基本信息</div><div class="card-title">先了解一下你的基本情况</div><div class="card-desc">这些信息帮助更精准地推荐</div>
+<div class="input-wrap"><label class="input-label">你的姓名或昵称</label><input type="text" class="text-input" id="userName" placeholder="可选，结果页会显示"></div>
+<div class="input-wrap"><label class="input-label">你的省份</label><select class="text-input" id="userProvince" onchange="updateScoreHint()" style="-webkit-appearance:none;appearance:none;background-image:url(\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path d=%22M2 4l4 4 4-4%22 fill=%22none%22 stroke=%22%239fa8da%22 stroke-width=%221.5%22/></svg>\');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px"><option value="">请选择省份</option></select></div>
+<div class="input-wrap"><label class="input-label">选科组合</label><select class="text-input" id="userSubjectCombo" style="-webkit-appearance:none;appearance:none;background-image:url(\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path d=%22M2 4l4 4 4-4%22 fill=%22none%22 stroke=%22%239fa8da%22 stroke-width=%221.5%22/></svg>\');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px"><option value="物化生">物化生（最常见）</option><option value="物化政">物化政</option><option value="物化地">物化地</option><option value="物生政">物生政</option><option value="物生地">物生地</option><option value="物政地">物政地</option><option value="史政地">史政地（文科）</option><option value="史政生">史政生</option><option value="史化生">史化生</option><option value="史化地">史化地</option><option value="史化政">史化政</option></select></div>
+<div class="input-wrap"><label class="input-label">分数或排名（二选一）</label><div style="display:flex;gap:8px;margin-bottom:10px"><label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:6px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);transition:all .2s" id="modeScoreLabel"><input type="radio" name="rankMode" value="score" checked onchange="toggleRankMode()" style="accent-color:var(--accent2)">按分数</label><label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:6px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);transition:all .2s" id="modeRankLabel"><input type="radio" name="rankMode" value="rank" onchange="toggleRankMode()" style="accent-color:var(--accent2)">按省排名</label></div><div id="scoreInputWrap"><input type="number" class="text-input" id="userScore" placeholder="输入模拟考分数" oninput="updateScoreHint()" min="200" max="800"></div><div id="rankInputWrap" style="display:none"><input type="number" class="text-input" id="userRank" placeholder="输入全省排名" oninput="updateScoreHint()" min="100" max="500000"></div></div>
+<div id="scoreHint" style="padding:10px 14px;border-radius:10px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.12);font-size:12px;margin-bottom:16px"><span style="color:var(--text-dim)">选择省份并输入分数后，自动判断分档</span></div>
+<div class="input-wrap"><label class="input-label">意向大学城市（多选）</label><div class="tag-options" id="cityTags">
+<button class="tag-btn" data-val="北京" onclick="toggleTag(this,'cities')">北京</button>
+<button class="tag-btn" data-val="上海" onclick="toggleTag(this,'cities')">上海</button>
+<button class="tag-btn" data-val="广州" onclick="toggleTag(this,'cities')">广州</button>
+<button class="tag-btn" data-val="深圳" onclick="toggleTag(this,'cities')">深圳</button>
+<button class="tag-btn" data-val="南京" onclick="toggleTag(this,'cities')">南京</button>
+<button class="tag-btn" data-val="杭州" onclick="toggleTag(this,'cities')">杭州</button>
+<button class="tag-btn" data-val="成都" onclick="toggleTag(this,'cities')">成都</button>
+<button class="tag-btn" data-val="武汉" onclick="toggleTag(this,'cities')">武汉</button>
+<button class="tag-btn" data-val="西安" onclick="toggleTag(this,'cities')">西安</button>
+<button class="tag-btn" data-val="天津" onclick="toggleTag(this,'cities')">天津</button>
+<button class="tag-btn" data-val="重庆" onclick="toggleTag(this,'cities')">重庆</button>
+<button class="tag-btn" data-val="无所谓" onclick="toggleTag(this,'cities')">无所谓</button>
+</div></div>
+<div class="sub-label">明确不想去的城市</div><div class="tag-options" id="rejectCityTags">
+<button class="tag-btn" data-val="北京" onclick="toggleReject(this,'rejectCities')">北京</button>
+<button class="tag-btn" data-val="上海" onclick="toggleReject(this,'rejectCities')">上海</button>
+<button class="tag-btn" data-val="广州" onclick="toggleReject(this,'rejectCities')">广州</button>
+<button class="tag-btn" data-val="深圳" onclick="toggleReject(this,'rejectCities')">深圳</button>
+<button class="tag-btn" data-val="南京" onclick="toggleReject(this,'rejectCities')">南京</button>
+<button class="tag-btn" data-val="杭州" onclick="toggleReject(this,'rejectCities')">杭州</button>
+<button class="tag-btn" data-val="成都" onclick="toggleReject(this,'rejectCities')">成都</button>
+<button class="tag-btn" data-val="武汉" onclick="toggleReject(this,'rejectCities')">武汉</button>
+<button class="tag-btn" data-val="西安" onclick="toggleReject(this,'rejectCities')">西安</button>
+<button class="tag-btn" data-val="天津" onclick="toggleReject(this,'rejectCities')">天津</button>
+<button class="tag-btn" data-val="重庆" onclick="toggleReject(this,'rejectCities')">重庆</button>
+</div>
+<div class="sub-label">明确不想学的专业方向</div><div class="tag-options" id="rejectMajorTags">
+<button class="tag-btn" data-val="临床医学" onclick="toggleReject(this,'rejectMajors')">临床医学<span class="tag-hint">当医生，学制长，课业重</span></button>
+<button class="tag-btn" data-val="口腔医学" onclick="toggleReject(this,'rejectMajors')">口腔医学<span class="tag-hint">看牙，分数极高</span></button>
+<button class="tag-btn" data-val="纯数学/物理" onclick="toggleReject(this,'rejectMajors')">纯数学/物理<span class="tag-hint">理论研究，偏抽象</span></button>
+<button class="tag-btn" data-val="农学/林学" onclick="toggleReject(this,'rejectMajors')">农学/林学<span class="tag-hint">偏野外实践</span></button>
+<button class="tag-btn" data-val="地质/矿业" onclick="toggleReject(this,'rejectMajors')">地质/矿业<span class="tag-hint">工作地点偏远</span></button>
+</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(0)">← 返回</button><button class="btn btn-next" onclick="goStep(2)">下一步 →</button></div></div>
+<div class="card hidden" id="step-2"><div class="card-step">第二步 · 生活中的你</div><div class="card-title">回答8个小问题，看看你在生活中的真实样子</div><div class="card-desc">没有对错，选你最真实的想法就好</div>
+<div class="q-dots" id="q2-dots"></div>
+<div class="scene-group"><div class="scene-group-title">🌿 日常与学习</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">1</span>一个周末的下午，没有课也没有作业，你通常会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="1" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>整理笔记、把之前没搞懂的知识点弄明白，感觉很满足</button>
+<button class="scenario-opt" data-q="1" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>刷到一个有趣的博主，然后自己也想试着做点什么</button>
+<button class="scenario-opt" data-q="1" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>约同学出去逛街、聊天，或者在微信群里聊八卦</button>
+<button class="scenario-opt" data-q="1" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>修理坏了的东西，比如电脑卡了、手机摔了，想搞清楚怎么回事</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">2</span>期末考前一周，你会怎么安排复习？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="2" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>先列计划，按章节和题型一步步推进，有条不紊</button>
+<button class="scenario-opt" data-q="2" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>先理解原理，不死记，觉得理解了自然就能答出来</button>
+<button class="scenario-opt" data-q="2" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>和同学一起复习，互相提问，互相讲给对方听</button>
+<button class="scenario-opt" data-q="2" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>多刷题，通过做题来发现哪里不会，再针对性补</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">3</span>你们班要搞一次班级活动（比如晚会、比赛），你大概率会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="3" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>主动站出来承担策划工作，列清单、排时间表</button>
+<button class="scenario-opt" data-q="3" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>想一个特别有意思的点子，让活动变得不一样</button>
+<button class="scenario-opt" data-q="3" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>积极响应，帮忙拉人、宣传，活跃气氛</button>
+<button class="scenario-opt" data-q="3" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>主动负责现场布置或设备调试等具体执行工作</button>
+</div></div>
+</div>
+<div class="scene-group"><div class="scene-group-title">🔭 兴趣与好奇心</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">4</span>看到一篇让你印象深刻的新闻报道，它最可能是关于？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="4" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>某项科学研究的新发现，比如癌症治疗、AI突破</button>
+<button class="scenario-opt" data-q="4" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>某个独特的设计或创意产品，让人眼前一亮</button>
+<button class="scenario-opt" data-q="4" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>某个平凡人的感人故事，让人觉得世界有温暖</button>
+<button class="scenario-opt" data-q="4" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>某个真实的技术故障或工程事故，分析原因和教训</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">5</span>你有1个月带薪实习的机会，你会选？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="5" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>大学实验室，跟教授做科研项目</button>
+<button class="scenario-opt" data-q="5" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>一家创意公司，比如做设计、拍视频、写内容的团队</button>
+<button class="scenario-opt" data-q="5" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>一家医院或者公益机构，能帮到真实的人</button>
+<button class="scenario-opt" data-q="5" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>一家工厂或者车间，看真实的机器怎么运转</button>
+</div></div>
+</div>
+<div class="scene-group"><div class="scene-group-title">🤝 社交与工作</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">6</span>一个数学题你算了很久得到答案，但同学们算出的是另一个结果，你会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="6" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>再检查一遍自己的计算过程，用不同方法验算，确认自己没错</button>
+<button class="scenario-opt" data-q="6" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>去网上搜类似题型的解法，看看有没有更巧妙的思路</button>
+<button class="scenario-opt" data-q="6" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>和同学讨论，听听他们的思路，也说说自己的想法</button>
+<button class="scenario-opt" data-q="6" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>不管结果，先问老师正确答案是什么，搞清楚原因</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">7</span>假设你参加了一个项目社团，要完成一个任务，你更愿意负责？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="7" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>整体规划：定目标、分任务、跟进度，确保按时完成</button>
+<button class="scenario-opt" data-q="7" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>内容创意：想创意方向、文案、视觉呈现，让作品出彩</button>
+<button class="scenario-opt" data-q="7" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>沟通联络：联系外部资源、协调成员关系、推进合作</button>
+<button class="scenario-opt" data-q="7" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>具体执行：做调研、整理数据、写代码、搭建模型</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">8</span>你最认同以下哪种对未来的想象？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="8" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>在一个领域成为专家，做别人做不到的研究</button>
+<button class="scenario-opt" data-q="8" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>做一份有美感、有创意的工作，每天都有新鲜感</button>
+<button class="scenario-opt" data-q="8" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>成为一个被需要的人，在团队里是不可或缺的角色</button>
+<button class="scenario-opt" data-q="8" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>做一件实实在在的事，比如建造什么、制造什么、改善什么</button>
+</div></div>
+</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(1)">← 返回</button><button class="btn btn-next" id="q2-next" disabled onclick="goStep(3)">下一步 →</button></div></div>
+<div class="card hidden" id="step-3"><div class="card-step">第三步 · 学科倾向</div><div class="card-title">关于高中课程和兴趣，你更接近哪个？</div><div class="card-desc">选你觉得最符合的，1-2个即可</div>
+<div class="scene-group"><div class="scene-group-title">📐 课程偏好</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">①</span>你在高中阶段，哪类课让你学起来最有感觉？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj1" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>物理 — 喜欢推导公式、理解原理、做实验</button>
+<button class="scenario-opt" data-q="subj1" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生物 — 喜欢记各种生命现象、人体机制</button>
+<button class="scenario-opt" data-q="subj1" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>数学/信息 — 喜欢逻辑推理、算题、编程</button>
+<button class="scenario-opt" data-q="subj1" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>化学/其他 — 喜欢实验操作，或文科类</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">②</span>你在网上最愿意主动去了解的内容是？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj2" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>科技类：AI、数码产品、互联网</button>
+<button class="scenario-opt" data-q="subj2" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生命健康类：医学知识、养生</button>
+<button class="scenario-opt" data-q="subj2" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>创意设计类：视觉、产品、建筑</button>
+<button class="scenario-opt" data-q="subj2" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>财经商业类：赚钱、行业趋势</button>
+</div></div></div>
+<div class="scene-group"><div class="scene-group-title">💡 深究世界</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">③</span>你最想深入了解世界的哪个方面？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj3" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>宇宙和物质的本质 — 大到星辰，小到粒子</button>
+<button class="scenario-opt" data-q="subj3" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生命和健康 — 人类、疾病、药物</button>
+<button class="scenario-opt" data-q="subj3" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>信息与计算 — 数据、算法、代码</button>
+<button class="scenario-opt" data-q="subj3" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>人与社会 — 人的行为、组织、文化</button>
+</div></div></div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(2)">← 返回</button><button class="btn btn-next" id="q3-next" disabled onclick="goStep(4)">下一步 →</button></div></div>
+<div class="card hidden" id="step-4"><div class="card-step">第四步 · 职业价值观</div><div class="card-title">想象一下，你毕业后的第一份工作是什么样的？</div><div class="card-desc">拖动每个问题的滑块，表达你的真实想法</div>
+<div class="value-card"><div class="value-card-title">💰 你希望毕业后第一份工作月薪大概多少？</div><div class="value-card-desc">这不是贪心，是现实考虑 — 你觉得自己值得多少？</div><div class="value-card-anchors"><span>🤔 够生活费就行</span><span>💪 希望有不错的积蓄</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-salary" oninput="updateSlider('salary')"><span class="val-num" id="val-salary">50</span></div>
+<div class="val-label-text" id="label-salary">中等水平，够花就好</div></div>
+<div class="value-card"><div class="value-card-title">🛡️ 毕业三年后，你更希望处于哪种状态？</div><div class="value-card-desc">想象两个真实可能的画面，你更向往哪一个？</div><div class="value-card-anchors"><span>🏢 大企业稳定，节奏慢但安心</span><span>🚀 创业公司挑战多，成长快但有风险</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-stability" oninput="updateSlider('stability')"><span class="val-num" id="val-stability">50</span></div>
+<div class="val-label-text" id="label-stability">各有所长</div></div>
+<div class="value-card"><div class="value-card-title">📈 你最理想的工作节奏是什么样的？</div><div class="value-card-desc">你对"成长"的理解，更偏向哪一种？</div><div class="value-card-anchors"><span>🎓 有人带、有反馈、有明确路径</span><span>🧭 边做边学，自由探索自己来</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-growth" oninput="updateSlider('growth')"><span class="val-num" id="val-growth">50</span></div>
+<div class="val-label-text" id="label-growth">两者结合</div></div>
+<div class="value-card"><div class="value-card-title">⭐ 如果下面两个工作只能选一个，你会选？</div><div class="value-card-desc">纯粹从内心感受出发，哪一个让你更有价值感？</div><div class="value-card-anchors"><span>💊 参与研发一种新药，造福无数患者</span><span>📱 参与开发一款APP，服务千万用户</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-meaning" oninput="updateSlider('meaning')"><span class="val-num" id="val-meaning">50</span></div>
+<div class="val-label-text" id="label-meaning">两者都有意义</div></div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(3)">← 返回</button><button class="btn btn-next" onclick="goStep(5)">下一步 →</button></div></div>
+<div class="card hidden" id="step-5"><div class="card-step">第五步 · 行业偏好</div><div class="card-title">你对哪些行业更有好感？</div><div class="card-desc">可多选，我们会在这些方向中重点推荐（点击卡片查看行业说明）</div>
+<div class="tag-card-options" id="industryTags">
+<div class="tag-card" data-val="ai" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🤖 人工智能</div><div class="tag-card-hint">让机器像人一样思考、决策，包括大模型、自动驾驶、AI for Science</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="semiconductor" onclick="toggleIndustryCard(this)"><div class="tag-card-name">💾 芯片半导体</div><div class="tag-card-hint">设计制造CPU/GPU/存储芯片，是数字世界的"地基"，国产替代是国策</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="newenergy" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🔋 新能源</div><div class="tag-card-hint">光伏、风电、储能、氢能 — 双碳目标下的超级赛道</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="biomed" onclick="toggleIndustryCard(this)"><div class="tag-card-name">💊 生物医药</div><div class="tag-card-hint">研发新药物、新疗法，人口老龄化是最大的需求支撑</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="auto" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🚗 智能汽车</div><div class="tag-card-hint">电动车+智能化双轮驱动，汽车产业正在被重新定义</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="robot" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🦾 机器人</div><div class="tag-card-hint">人形机器人量产在即，工业与服务机器人全面渗透</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="finance" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🏦 金融科技</div><div class="tag-card-hint">用大数据、AI优化银行/证券/保险，FinTech是高薪方向</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="aerospace" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🚀 航空航天</div><div class="tag-card-hint">卫星互联网、商业火箭、深空探测，中国航天进入快车道</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="medical" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🏥 医疗器械</div><div class="tag-card-hint">CT、MRI、手术机器人 — 高端器械国产替代空间巨大</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="env" onclick="toggleIndustryCard(this)"><div class="tag-card-name">♻️ 绿色环保</div><div class="tag-card-hint">碳交易、污染治理、ESG咨询 — 政策强力驱动的新兴方向</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="media" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🎮 数字创意</div><div class="tag-card-hint">游戏、动漫、短视频、元宇宙 — AIGC让创作门槛大幅降低</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="logistics" onclick="toggleIndustryCard(this)"><div class="tag-card-name">📦 智慧物流</div><div class="tag-card-hint">无人机配送、仓储自动化、供应链AI — 电商背后的基础设施</div><div class="reject-mark">✕ 排除此行业</div></div>
+</div>
+<div class="sub-label">明确不感兴趣的行业（点击已选卡片可切换为排除）</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(4)">← 返回</button><button class="btn btn-primary" onclick="generateResult()">✨ 生成我的志愿报告</button></div></div>
+<div class="card hidden" id="step-loading"><div style="text-align:center;padding:60px 0"><div style="font-size:48px;margin-bottom:20px;animation:pulse-glow 1.5s ease-in-out infinite">🔭</div><div style="font-size:18px;font-weight:600;margin-bottom:8px">正在为你分析最佳志愿方案...</div><div style="font-size:13px;color:var(--text-dim);margin-bottom:24px">结合性格测评、行业趋势与分数匹配</div><div class="progress-bar"><div class="progress-fill" id="loadingBar" style="width:0%;animation:loadAnim 2.5s ease-in-out forwards"></div></div><div style="font-size:12px;color:var(--text-dim);margin-top:12px" id="loadingText">正在分析性格特质...</div></div></div>
+<div id="result-page" class="hidden"></div>
+</div>
+<div class="toast hidden" id="toast"></div>
+<script>
+// gaokao-planner app.js - 通用版（全国、全分数段、选科组合）
+const STEPS=5;
+let currentStep=0;
+let answers={q2answers:{},q3answers:{},values:{salary:50,stability:50,growth:50,meaning:50},industries:[],industryMode:{},cities:[],rejectCities:[],rejectMajors:[],rejectIndustries:[],score:550,name:"",province:"",subjectCombo:"物化生",rankMode:"score",rank:0};
+
+// ===== 省份数据 =====
+const PROVINCES=["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江","上海","江苏","浙江","安徽","福建","江西","山东","河南","湖北","湖南","广东","广西","海南","重庆","四川","贵州","云南","西藏","陕西","甘肃","青海","宁夏","新疆"];
+
+const SUBJECT_COMBOS=["物化生","物化政","物化地","物生政","物生地","物政地","史政地","史政生","史化生","史化地","史化政"];
+
+// 分数线参考（2024年各省理科/物理类一本线近似值，供匹配用）
+const SCORE_REF={
+  "北京":{yiben:532,total:750},"天津":{yiben:563,total:750},"河北":{yiben:502,total:750},"山西":{yiben:517,total:750},
+  "内蒙古":{yiben:471,total:750},"辽宁":{yiben:510,total:750},"吉林":{yiben:468,total:750},"黑龙江":{yiben:429,total:750},
+  "上海":{yiben:504,total:660},"江苏":{yiben:516,total:750},"浙江":{yiben:595,total:750},"安徽":{yiben:514,total:750},
+  "福建":{yiben:538,total:750},"江西":{yiben:530,total:750},"山东":{yiben:518,total:750},"河南":{yiben:521,total:750},
+  "湖北":{yiben:533,total:750},"湖南":{yiben:522,total:750},"广东":{yiben:539,total:750},"广西":{yiben:502,total:750},
+  "海南":{yiben:563,total:900},"重庆":{yiben:505,total:750},"四川":{yiben:539,total:750},"贵州":{yiben:484,total:750},
+  "云南":{yiben:510,total:750},"西藏":{yiben:410,total:750},"陕西":{yiben:475,total:750},"甘肃":{yiben:442,total:750},
+  "青海":{yiben:388,total:750},"宁夏":{yiben:432,total:750},"新疆":{yiben:450,total:750}
+};
+
+// 根据省份和分数计算"分档标签"
+function getScoreTier(province,score){
+  const ref=SCORE_REF[province];
+  if(!ref) return {tier:"本科线附近",label:"本科线附近"};
+  const diff=score-ref.yiben;
+  if(diff>=80) return {tier:"985冲刺",label:"超一本线"+diff+"分 · 985冲刺档"};
+  if(diff>=40) return {tier:"211核心",label:"超一本线"+diff+"分 · 211核心档"};
+  if(diff>=0)  return {tier:"一本稳",label:"超一本线"+diff+"分 · 一本稳档"};
+  if(diff>=-30) return {tier:"一本冲",label:"低于一本线"+Math.abs(diff)+"分 · 一本冲档"};
+  return {tier:"二本核心",label:"低于一本线"+Math.abs(diff)+"分 · 二本核心档"};
+}
+
+const PERSONALITY_SCORING={
+  1:{A:{t:"analytical",s:3},B:{t:"creative",s:3},C:{t:"social",s:3},D:{t:"practical",s:3}},
+  2:{A:{t:"analytical",s:2},B:{t:"analytical",s:2},C:{t:"social",s:3},D:{t:"practical",s:3}},
+  3:{A:{t:"leadership",s:3},B:{t:"creative",s:3},C:{t:"social",s:3},D:{t:"practical",s:3}},
+  4:{A:{t:"analytical",s:3},B:{t:"creative",s:3},C:{t:"social",s:2},D:{t:"practical",s:2}},
+  5:{A:{t:"analytical",s:3},B:{t:"creative",s:3},C:{t:"social",s:3},D:{t:"practical",s:3}},
+  6:{A:{t:"analytical",s:3},B:{t:"creative",s:2},C:{t:"social",s:2},D:{t:"practical",s:3}},
+  7:{A:{t:"leadership",s:3},B:{t:"creative",s:3},C:{t:"social",s:3},D:{t:"practical",s:2}},
+  8:{A:{t:"analytical",s:3},B:{t:"creative",s:3},C:{t:"social",s:2},D:{t:"practical",s:3}},
+};
+
+const PERSONALITY_TYPES={
+  analytical:{name:"分析研究型",icon:"\ud83d\udd2c",desc:"你逻辑清晰，善于深度思考，适合需要精确性和研究能力的发展方向。推荐：人工智能、微电子、数据科学、生物医药研发。"},
+  creative:{name:"创新创造型",icon:"\ud83c\udfa8",desc:"你富有想象力和美感，喜欢新鲜事物，适合需要创意和跨界能力的方向。推荐：人工智能算法、数字创意、产品设计、建筑设计。"},
+  social:{name:"社会关怀型",icon:"\ud83e\udd1d",desc:"你善于沟通协作，重视人与人之间的联系，适合能直接创造社会价值的方向。推荐：医学、药学、公共卫生、教育学。"},
+  practical:{name:"实干动手型",icon:"\ud83d\udd27",desc:"你动手能力强，重视成果落地，适合需要实际操作和工程技术能力的方向。推荐：机器人工程、车辆工程、自动化、新能源工程。"},
+  leadership:{name:"组织影响型",icon:"\ud83d\udc51",desc:"你善于统筹规划，有影响力，适合需要综合管理和战略眼光的领域。推荐：信息管理、金融工程、能源经济、航空航天。"},
+};
+
+const PERSONALITY_SCORES={analytical:0,creative:0,social:0,practical:0,leadership:0};
+
+const INDUSTRY_DATA={
+  ai:{name:"人工智能",trend:"up",score:95,desc:"AGI突破、AI应用爆发，未来10年持续高景气，人才缺口巨大"},
+  semiconductor:{name:"芯片半导体",trend:"up",score:90,desc:"国产替代加速，政策强力支持，未来10年战略核心产业"},
+  newenergy:{name:"新能源",trend:"up",score:88,desc:"双碳目标驱动，光伏、储能、氢能全面发展"},
+  biomed:{name:"生物医药",trend:"up",score:85,desc:"人口老龄化+创新药爆发，生物医药迎来黄金十年"},
+  auto:{name:"智能汽车",trend:"up",score:87,desc:"电动化+智能化双轮驱动，产业变革核心赛道"},
+  robot:{name:"机器人",trend:"up",score:82,desc:"人形机器人量产在即，工业与服务机器人全面渗透"},
+  finance:{name:"金融科技",trend:"stable",score:70,desc:"金融行业整体稳定，FinTech方向有新机会"},
+  aerospace:{name:"航空航天",trend:"up",score:78,desc:"商业航天崛起，卫星互联网、深空探测持续推进"},
+  medical:{name:"医疗器械",trend:"up",score:80,desc:"国产替代+老龄化需求，高端医疗器械空间巨大"},
+  env:{name:"绿色环保",trend:"up",score:75,desc:"双碳政策持续，环保产业稳定增长"},
+  media:{name:"数字创意",trend:"stable",score:68,desc:"元宇宙、AIGC推动创意产业变革，机会与风险并存"},
+  logistics:{name:"智慧物流",trend:"stable",score:72,desc:"电商+自动化驱动，智慧物流稳步发展"},
+};
+
+// ===== 全国院校专业数据库（按分数档+选科覆盖）=====
+const MAJOR_DB=[
+  // ---- 985冲刺档 (超一本80+) ----
+  {major:"人工智能",school:"浙江大学",score:665,province:"浙江",industry:"ai",reason:"顶尖985，AI国际排名前列，就业顶级互联网+AI Lab",type:"冲刺",combos:["物化生","物化政","物化地","物生政"],traits:["analytical","creative"]},
+  {major:"计算机科学与技术",school:"南京大学",score:658,province:"江苏",industry:"ai",reason:"南大CS实力顶尖，AI方向有周志华团队，学术+就业双优",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"人工智能",school:"西安交通大学",score:648,province:"陕西",industry:"ai",reason:"C9名校，AI学科评估A+，西北地区首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical"]},
+  {major:"微电子科学与工程",school:"电子科技大学",score:645,province:"四川",industry:"semiconductor",reason:"电子类顶尖985，芯片方向就业华为海思/中芯国际",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"生物医学工程",school:"东南大学",score:640,province:"江苏",industry:"biomed",reason:"生医工全国前三，医疗器械+生物信息方向强",type:"冲刺",combos:["物化生"],traits:["analytical","social"]},
+  {major:"新能源科学与工程",school:"华中科技大学",score:638,province:"湖北",industry:"newenergy",reason:"能源动力顶尖，新能源方向就业宁德时代/比亚迪",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"临床医学(八年制)",school:"中南大学",score:642,province:"湖南",industry:"biomed",reason:"湘雅医学院，医学顶尖，八年直博",type:"冲刺",combos:["物化生"],traits:["social","analytical"]},
+  {major:"航空航天工程",school:"北京航空航天大学",score:655,province:"北京",industry:"aerospace",reason:"航空航天第一校，就业航天科技/科工集团",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+
+  // ---- 211核心档 (超一本40-80) ----
+  {major:"人工智能",school:"西安电子科技大学",score:595,province:"陕西",industry:"ai",reason:"西电AI实力顶尖，就业华为/腾讯/字节",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"计算机科学与技术",school:"北京邮电大学",score:610,province:"北京",industry:"ai",reason:"计算机+通信顶尖211，北京互联网就业首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"集成电路设计与集成系统",school:"杭州电子科技大学",score:575,province:"浙江",industry:"semiconductor",reason:"集成电路热门方向，长三角芯片企业就业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"新能源科学与工程",school:"华北电力大学(保定)",score:562,province:"河北",industry:"newenergy",reason:"电力行业顶尖，新能源方向就业国家电网",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"车辆工程(智能汽车方向)",school:"合肥工业大学",score:560,province:"安徽",industry:"auto",reason:"车辆工程顶尖211，智能汽车方向，就业比亚迪/蔚来",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"生物医学工程",school:"北京化工大学",score:558,province:"北京",industry:"biomed",reason:"211高校，生医工实力强，北京就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","social"]},
+  {major:"金融工程",school:"上海财经大学",score:618,province:"上海",industry:"finance",reason:"金融顶尖211，量化方向就业券商/基金",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
+  {major:"机器人工程",school:"哈尔滨工程大学",score:555,province:"黑龙江",industry:"robot",reason:"船舶+机器人特色211，国防背景",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"飞行器设计与工程",school:"南京航空航天大学",score:568,province:"江苏",industry:"aerospace",reason:"航空特色211，就业航空工业集团",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"储能科学与工程",school:"中国石油大学(华东)",score:552,province:"山东",industry:"newenergy",reason:"211高校，储能新兴方向，未来10年高潜力",type:"稳妥",combos:["物化生","物化地"],traits:["analytical"]},
+
+  // ---- 一本稳档 (超一本0-40) ----
+  {major:"人工智能",school:"杭州电子科技大学",score:545,province:"浙江",industry:"ai",reason:"AI应用型强校，地处杭州互联网腹地，就业极佳",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"软件工程",school:"天津工业大学",score:538,province:"天津",industry:"ai",reason:"双一流，软件工程就业广，天津/北京双城就业",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["practical","creative"]},
+  {major:"网络空间安全",school:"杭州电子科技大学",score:542,province:"浙江",industry:"ai",reason:"网络安全热门方向，就业阿里/安全企业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"电子科学与技术",school:"中北大学",score:505,province:"山西",industry:"semiconductor",reason:"兵工背景，微电子方向有特色，性价比高",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"新能源汽车工程",school:"江苏大学",score:530,province:"江苏",industry:"auto",reason:"汽车工程强校，新能源方向，长三角就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"生物制药",school:"天津理工大学",score:520,province:"天津",industry:"biomed",reason:"生物制药新兴方向，京津冀医药企业就业",type:"稳妥",combos:["物化生"],traits:["analytical"]},
+  {major:"药学",school:"山西医科大学",score:505,province:"山西",industry:"biomed",reason:"省内医学强校，药学就业医院/药企，稳定有意义",type:"保底",combos:["物化生","物化政"],traits:["social"]},
+  {major:"自动化",school:"太原科技大学",score:498,province:"山西",industry:"robot",reason:"自动化传统方向，机器人转型，就业制造业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"信息管理与信息系统",school:"太原理工大学",score:528,province:"山西",industry:"finance",reason:"211，管理+技术交叉，就业金融科技",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
+  {major:"航空航天工程",school:"中北大学",score:500,province:"山西",industry:"aerospace",reason:"兵工背景，航空航天特色，就业航天企业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"能源与动力工程",school:"太原理工大学",score:522,province:"山西",industry:"newenergy",reason:"211，能源方向传统强项，转型新能源有优势",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"机器人工程",school:"安徽工程大学",score:510,province:"安徽",industry:"robot",reason:"机器人新兴专业，安徽工业机器人产业发达",type:"稳妥",combos:["物化生","物化地"],traits:["practical","creative"]},
+  {major:"医疗器械工程",school:"上海理工大学",score:535,province:"上海",industry:"medical",reason:"医疗器械强校，上海就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
+  {major:"计算机科学与技术",school:"西安邮电大学",score:536,province:"陕西",industry:"ai",reason:"计算机热门院校，就业西安/北京/深圳互联网",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"智能科学与技术",school:"太原理工大学",score:520,province:"山西",industry:"ai",reason:"省内211，保研机会多，性价比高",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"数据科学与大数据技术",school:"山西大学",score:515,province:"山西",industry:"ai",reason:"省内双一流，大数据方向，就业面广",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"金融工程",school:"山西财经大学",score:508,province:"山西",industry:"finance",reason:"省内金融强校，量化方向，就业银行/证券",type:"保底",combos:["物化生","物化政","物化地"],traits:["analytical","social"]},
+  {major:"汽车服务工程",school:"中北大学",score:495,province:"山西",industry:"auto",reason:"省内保底，汽车产业转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+
+  // ---- 一本冲档 (低于一本0-30) ----
+  {major:"软件工程",school:"太原科技大学",score:488,province:"山西",industry:"ai",reason:"省内保底，软件工程就业广",type:"保底",combos:["物化生","物化地"],traits:["practical","creative"]},
+  {major:"电气工程及其自动化",school:"沈阳工业大学",score:490,province:"辽宁",industry:"newenergy",reason:"电气强校，新能源+电网就业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"电子信息工程",school:"长春理工大学",score:492,province:"吉林",industry:"semiconductor",reason:"光电特色，电子方向就业半导体企业",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"制药工程",school:"河北科技大学",score:485,province:"河北",industry:"biomed",reason:"制药方向，京津冀药企就业",type:"保底",combos:["物化生"],traits:["analytical","social"]},
+  {major:"机械设计制造及其自动化",school:"河南科技大学",score:488,province:"河南",industry:"robot",reason:"机械强校，机器人转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"飞行器制造工程",school:"沈阳航空航天大学",score:495,province:"辽宁",industry:"aerospace",reason:"航空特色院校，就业航空工业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+
+  // ---- 二本核心档 ----
+  {major:"计算机科学与技术",school:"太原工业学院",score:460,province:"山西",industry:"ai",reason:"省内二本，计算机方向就业可去本地IT企业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"电气工程及其自动化",school:"运城学院",score:445,province:"山西",industry:"newenergy",reason:"省内二本，电气方向可考国网",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"数据科学与大数据技术",school:"长治学院",score:440,province:"山西",industry:"ai",reason:"省内二本，大数据方向，考研/就业均可",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"机械电子工程",school:"湖南工学院",score:455,province:"湖南",industry:"robot",reason:"机电方向，机器人产业应用",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+
+  // ---- 额外热门专业（高分段补充）----
+  {major:"临床医学(五年制)",school:"郑州大学",score:600,province:"河南",industry:"biomed",reason:"211医学院，中原地区医学强校",type:"稳妥",combos:["物化生"],traits:["social","analytical"]},
+  {major:"口腔医学",school:"武汉大学",score:650,province:"湖北",industry:"biomed",reason:"口腔顶尖，就业收入高，专业性强",type:"冲刺",combos:["物化生"],traits:["social","practical"]},
+  {major:"微电子科学与工程",school:"西安电子科技大学",score:598,province:"陕西",industry:"semiconductor",reason:"微电子顶尖院校，芯片设计就业海思/中芯",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"电子信息工程",school:"电子科技大学",score:640,province:"四川",industry:"semiconductor",reason:"电子类顶尖985，就业华为/大疆",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"新能源材料与器件",school:"武汉理工大学",score:565,province:"湖北",industry:"newenergy",reason:"材料+新能源交叉，211性价比高",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
+  {major:"智能制造工程",school:"北京工业大学",score:570,province:"北京",industry:"robot",reason:"211，智能制造新方向，北京就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"数字经济",school:"湖南大学",score:590,province:"湖南",industry:"finance",reason:"985，数字经济新兴方向，金融+数据",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["leadership","analytical"]},
+  {major:"应用心理学",school:"华南师范大学",score:555,province:"广东",industry:"social",reason:"211，心理学方向，心理咨询/HR",type:"稳妥",combos:["物化生","物化政","物生政"],traits:["social"]},
+];
+
+const SLIDER_LABELS={
+  salary:["中等水平，够花就好","安全感足，日常宽松","有一定积蓄，能追点小爱好","可以有不错的储蓄和投资空间","相当可观的收入水平"],
+  stability:["完全倾向创业公司","偏创业公司","各有所长","偏大企业","完全倾向大企业"],
+  growth:["必须有人带","偏有人带","两者结合","偏自己探索","自己探索为主"],
+  meaning:["APP更有意义","偏APP意义","两者都有意义","偏新药意义","新药更有意义"]
+};
+
+// ===== FUNCTIONS =====
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.remove("hidden");
+  setTimeout(()=>t.classList.add("hidden"),2200);
+}
+
+function updateProgress(step){
+  const pct=Math.round(step/(STEPS+1)*100);
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("progressPct").textContent=pct+"%";
+  const labels=["准备开始","基本信息","生活场景","学科兴趣","职业价值观","行业偏好"];
+  document.getElementById("progressLabel").textContent=labels[step]||"生成报告中...";
+}
+
+function showStep(n){
+  document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));
+  const el=document.getElementById("step-"+n);
+  if(el){el.classList.remove("hidden");el.style.animation="none";void el.offsetHeight;el.style.animation="cardIn 0.5s ease-out";}
+  currentStep=n;updateProgress(n);window.scrollTo({top:0,behavior:"smooth"});
+  if(n===2)updateQ2Dots();
+}
+
+function goStep(n){
+  if(currentStep===1){
+    const prov=document.getElementById("userProvince");
+    if(!prov||!prov.value){showToast("请选择你的省份");return;}
+    answers.province=prov.value;
+    answers.subjectCombo=document.getElementById("userSubjectCombo")?.value||"物化生";
+    answers.rankMode=document.querySelector('input[name="rankMode"]:checked')?.value||"score";
+    if(answers.rankMode==="score"){
+      answers.score=parseInt(document.getElementById("userScore")?.value)||0;
+      if(answers.score<200||answers.score>800){showToast("请输入合理的分数（200-800）");return;}
+    } else {
+      answers.rank=parseInt(document.getElementById("userRank")?.value)||0;
+      if(answers.rank<100||answers.rank>500000){showToast("请输入合理的省排名（100-500000）");return;}
+      // 根据省排名估算等效分数
+      answers.score=estimateScoreFromRank(answers.province,answers.rank);
+    }
+    answers.name=document.getElementById("userName")?.value||"同学";
+  }
+  if(currentStep===2){
+    const answered=Object.keys(answers.q2answers).length;
+    if(answered<8){showToast("请回答全部 8 道题（还差"+(8-answered)+"道）");return;}
+  }
+  if(currentStep===3){
+    if(Object.keys(answers.q3answers).length===0){showToast("请至少回答一道题");return;}
+  }
+  if(n===5){
+    answers.values={
+      salary:parseInt(document.getElementById("slider-salary").value),
+      stability:parseInt(document.getElementById("slider-stability").value),
+      growth:parseInt(document.getElementById("slider-growth").value),
+      meaning:parseInt(document.getElementById("slider-meaning").value)
+    };
+  }
+  showStep(n);
+}
+
+// 省排名→等效分数（简化估算）
+function estimateScoreFromRank(province,rank){
+  const ref=SCORE_REF[province];
+  if(!ref) return 500;
+  // 简化：根据排名估算分数
+  // 一本线对应排名约前15-20%，用对数模型
+  const total=ref.total;
+  const yiben=ref.yiben;
+  if(rank<=1000) return Math.min(yiben+120, total-10);
+  if(rank<=5000) return yiben+80;
+  if(rank<=15000) return yiben+40;
+  if(rank<=30000) return yiben;
+  if(rank<=60000) return yiben-30;
+  if(rank<=100000) return yiben-60;
+  return yiben-90;
+}
+
+// 动态更新分数档提示
+function updateScoreHint(){
+  const mode=document.querySelector('input[name="rankMode"]:checked')?.value||"score";
+  const hintEl=document.getElementById("scoreHint");
+  if(!hintEl) return;
+  if(mode==="score"){
+    const score=parseInt(document.getElementById("userScore")?.value)||0;
+    const province=document.getElementById("userProvince")?.value||"";
+    if(score>0 && province){
+      const tier=getScoreTier(province,score);
+      hintEl.innerHTML='<span style="color:var(--accent)">📐 '+tier.label+'</span>';
+    } else {
+      hintEl.innerHTML='<span style="color:var(--text-dim)">选择省份并输入分数后，自动判断分档</span>';
+    }
+  } else {
+    const rank=parseInt(document.getElementById("userRank")?.value)||0;
+    const province=document.getElementById("userProvince")?.value||"";
+    if(rank>0 && province){
+      const estScore=estimateScoreFromRank(province,rank);
+      const tier=getScoreTier(province,estScore);
+      hintEl.innerHTML='<span style="color:var(--accent)">📐 等效约'+estScore+'分 · '+tier.label+'</span>';
+    } else {
+      hintEl.innerHTML='<span style="color:var(--text-dim)">选择省份并输入排名后，自动估算分档</span>';
+    }
+  }
+}
+
+function toggleTag(btn,key){
+  btn.classList.toggle("selected");
+  const v=btn.dataset.val;
+  if(answers[key].includes(v))answers[key]=answers[key].filter(x=>x!==v);
+  else answers[key].push(v);
+}
+
+function toggleReject(btn,key){
+  btn.classList.toggle("rejected");
+  const v=btn.dataset.val;
+  if(answers[key].includes(v))answers[key]=answers[key].filter(x=>x!==v);
+  else answers[key].push(v);
+}
+
+function toggleIndustryCard(card){
+  const key=card.dataset.val;
+  if(card.classList.contains("rejected")){
+    card.classList.remove("rejected");card.classList.add("selected");
+    answers.industries.push(key);answers.industries=[...new Set(answers.industries)];answers.industryMode[key]="selected";
+  } else if(card.classList.contains("selected")){
+    card.classList.remove("selected");card.classList.add("rejected");
+    answers.industries=answers.industries.filter(x=>x!==key);
+    if(!answers.rejectIndustries.includes(key))answers.rejectIndustries.push(key);answers.industryMode[key]="rejected";
+  } else {
+    card.classList.add("selected");answers.industries.push(key);answers.industries=[...new Set(answers.industries)];answers.industryMode[key]="selected";
+  }
+}
+
+function selectScenario(btn){
+  const qNum=parseInt(btn.dataset.q);
+  btn.parentElement.querySelectorAll(".scenario-opt").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected");
+  answers.q2answers[qNum]=btn.dataset.val;
+  const answered=Object.keys(answers.q2answers).length;
+  document.getElementById("q2-next").disabled=answered<8;
+  document.getElementById("q2-next").textContent=answered<8?"还差"+(8-answered)+"题 →":"下一步 →";
+  updateQ2Dots();
+}
+
+function updateQ2Dots(){
+  const dots=document.getElementById("q2-dots");
+  if(!dots)return;dots.innerHTML="";
+  for(let i=1;i<=8;i++){const d=document.createElement("div");d.className="q-dot"+(answers.q2answers[i]?" done":"");dots.appendChild(d);}
+}
+
+function selectSubj(btn){
+  const qNum=btn.dataset.q;
+  btn.parentElement.querySelectorAll(".scenario-opt").forEach(b=>b.classList.remove("selected"));
+  btn.classList.add("selected");
+  answers.q3answers[qNum]=btn.dataset.val;
+  document.getElementById("q3-next").disabled=Object.keys(answers.q3answers).length===0;
+}
+
+function updateSlider(key){
+  const val=parseInt(document.getElementById("slider-"+key).value);
+  document.getElementById("val-"+key).textContent=val;
+  const labels=SLIDER_LABELS[key];
+  const idx=Math.round(val/25);
+  document.getElementById("label-"+key).textContent=labels?labels[Math.min(idx,labels.length-1)]||labels[0]:"";
+}
+
+function calcPersonality(){
+  Object.keys(PERSONALITY_SCORES).forEach(k=>PERSONALITY_SCORES[k]=0);
+  for(const[qNum,val]of Object.entries(answers.q2answers)){
+    const qKey=parseInt(qNum);
+    if(PERSONALITY_SCORING[qKey]&&PERSONALITY_SCORING[qKey][val]){
+      const{t,s}=PERSONALITY_SCORING[qKey][val];PERSONALITY_SCORES[t]+=s;
+    }
+  }
+  const sorted=Object.entries(PERSONALITY_SCORES).sort((a,b)=>b[1]-a[1]);
+  return sorted[0][0];
+}
+
+function generateResult(){
+  if(answers.industries.length===0){showToast("请至少选择一个感兴趣的行业");return;}
+  answers.name=document.getElementById("userName")?.value||"同学";
+  // Re-read score/rank in case user changed
+  answers.rankMode=document.querySelector('input[name="rankMode"]:checked')?.value||"score";
+  if(answers.rankMode==="score"){
+    answers.score=parseInt(document.getElementById("userScore")?.value)||550;
+  }
+  document.querySelectorAll(".card").forEach(c=>c.classList.add("hidden"));
+  document.getElementById("step-loading").classList.remove("hidden");
+  updateProgress(STEPS+1);window.scrollTo({top:0,behavior:"smooth"});
+  const msgs=["正在分析性格特质...","正在匹配最适合的学科方向...","正在评估未来10年行业前景...","正在筛选匹配分数段的院校专业...","正在生成个性化志愿报告..."];
+  let i=0;const iv=setInterval(()=>{if(i<msgs.length){document.getElementById("loadingText").textContent=msgs[i];i++;}else clearInterval(iv);},600);
+  setTimeout(()=>{clearInterval(iv);renderResult();},3200);
+}
+
+function getValueInterpret(v){
+  const tops=Object.entries(v).sort((a,b)=>b[1]-a[1]);
+  const nameMap={salary:"薪资",stability:"稳定",growth:"成长",meaning:"意义"};
+  const first=nameMap[tops[0][0]];
+  if(tops[0][1]>=70){
+    let suggestion;
+    if(first==="薪资"||first==="成长"){
+      suggestion="一线城市和新锐行业，能更快获得高收入和快速成长";
+    } else if(first==="稳定"){
+      suggestion="211/985高校和体制内方向，稳定性高";
+    } else {
+      suggestion="和你价值观契合的专业和行业，工作中才会有持续的动力";
+    }
+    return "你最看重<strong>「"+first+"」</strong>，说明你对未来有清晰的方向感。建议优先考虑"+suggestion+"。";
+  }
+  return "你的职业价值观比较均衡，这是一个很好的特质。建议多和不同行业的前辈聊聊，再逐步明确自己的优先级。";
+}
+
+function renderResult(){
+  const personalityKey=calcPersonality();
+  const persona=PERSONALITY_TYPES[personalityKey]||PERSONALITY_TYPES.analytical;
+  const scoreTier=getScoreTier(answers.province,answers.score);
+  const combo=answers.subjectCombo;
+
+  // 筛选匹配的专业：分数±30 + 行业匹配 + 选科兼容 + 排除
+  let matched=MAJOR_DB.filter(m=>{
+    const scoreMatch=Math.abs(m.score-answers.score)<=30;
+    const industryMatch=answers.industries.includes(m.industry);
+    const rejectIndustry=answers.rejectIndustries&&answers.rejectIndustries.includes(m.industry);
+    const comboMatch=!m.combos||m.combos.length===0||m.combos.includes(combo);
+    const rejectMajor=answers.rejectMajors&&answers.rejectMajors.some(rm=>m.major.includes(rm));
+    if(rejectIndustry||rejectMajor)return false;
+    if(!comboMatch)return false;
+    return scoreMatch&&industryMatch;
+  });
+
+  // 如果匹配太少，放宽条件
+  if(matched.length<3){
+    matched=MAJOR_DB.filter(m=>{
+      const comboMatch=!m.combos||m.combos.length===0||m.combos.includes(combo);
+      const rejectIndustry=answers.rejectIndustries&&answers.rejectIndustries.includes(m.industry);
+      const rejectMajor=answers.rejectMajors&&answers.rejectMajors.some(rm=>m.major.includes(rm));
+      if(rejectIndustry||rejectMajor)return false;
+      return comboMatch;
+    }).sort((a,b)=>Math.abs(a.score-answers.score)-Math.abs(b.score-answers.score)).slice(0,10);
+  }
+
+  const seen=new Set();matched=matched.filter(m=>{const k=m.school+m.major;if(seen.has(k))return false;seen.add(k);return true;}).slice(0,8);
+
+  const userIndustries=answers.industries.map(k=>INDUSTRY_DATA[k]).filter(Boolean);
+  const v=answers.values;
+  let html="";
+
+  // Header
+  const scoreDisplay=answers.rankMode==="rank"?"省排名约"+answers.rank+"名（等效约"+answers.score+"分）":answers.score+"分";
+  html+='<div class="result-header"><div class="result-avatar">'+persona.icon+'</div><div class="result-name">'+answers.name+'的志愿方案</div><div class="result-type">'+persona.name+' · '+answers.province+' · '+combo+' · '+scoreDisplay+'</div><div class="result-desc">'+persona.desc+'</div></div>';
+
+  // Personality traits
+  html+='<div class="result-section"><div class="result-section-title"><span class="dot"></span>性格特质分析</div><div class="card"><div style="font-size:13px;color:var(--text-dim);margin-bottom:14px">根据你在生活中的 8 道选择题推断得出</div><div class="trait-bars">';
+  const traitNames={analytical:"\ud83d\udd2c 分析研究",creative:"\ud83c\udfa8 创新创造",social:"\ud83e\udd1d 社交交往",practical:"\ud83d\udd27 实践动手",leadership:"\ud83d\udc51 组织影响"};
+  const traitColors={analytical:"var(--accent2),var(--accent)",creative:"var(--accent),var(--accent3)",social:"var(--accent3),#69f0ae",practical:"var(--gold),#ffb300",leadership:"#e040fb,#aa00ff"};
+  const maxScore=Math.max(...Object.values(PERSONALITY_SCORES),1);
+  for(const[type,score]of Object.entries(PERSONALITY_SCORES)){
+    const pct=Math.round(score/maxScore*100);const isTop=(type===personalityKey);
+    html+='<div style="'+(isTop?"opacity:1":"opacity:0.7")+'"><div class="trait-bar-label"><span class="trait-bar-name">'+traitNames[type]+(isTop?" \u2605 主要特质":"")+'</span><span class="trait-bar-val">'+score+'分</span></div><div class="trait-bar-track"><div class="trait-bar-fill" style="width:'+pct+'%;background:linear-gradient(90deg,'+traitColors[type]+')"></div></div></div>';
+  }
+  html+='</div></div></div>';
+
+  // Values
+  html+='<div class="result-section"><div class="result-section-title"><span class="dot"></span>职业价值观画像</div><div class="card"><div class="trait-bars">';
+  const valNames={salary:"\ud83d\udcb0 薪资期待",stability:"\ud83d\udee1\ufe0f 工作稳定",growth:"\ud83d\udcc8 成长空间",meaning:"\u2b50 意义与成就感"};
+  const valColors={salary:"#ff5252,#ff8a80",stability:"#448aff,#82b1ff",growth:"var(--accent2),var(--accent)",meaning:"var(--accent3),#69f0ae"};
+  for(const[key,val]of Object.entries(v)){
+    html+='<div><div class="trait-bar-label"><span class="trait-bar-name">'+valNames[key]+'</span><span class="trait-bar-val">'+val+'分</span></div><div class="trait-bar-track"><div class="trait-bar-fill" style="width:'+val+'%;background:linear-gradient(90deg,'+valColors[key]+')"></div></div></div>';
+  }
+  html+='<div style="margin-top:16px;padding:14px 18px;background:rgba(255,215,64,.08);border:1px solid rgba(255,215,64,.2);border-radius:12px;font-size:13px;color:var(--gold);line-height:1.7">\ud83d\udca1 <strong>\u89e3\u8bfb\uff1a</strong>'+getValueInterpret(v)+'</div></div></div>';
+
+  // Industries
+  if(userIndustries.length>0){
+    html+='<div class="result-section"><div class="result-section-title"><span class="dot"></span>你关注行业的未来10年前景</div>';
+    userIndustries.forEach(ind=>{
+      html+='<div class="industry-card"><div class="industry-icon" style="background:'+(ind.trend==="up"?"rgba(105,240,174,.15)":"rgba(255,215,64,.15)")+'">'+(ind.trend==="up"?"\ud83d\udcc8":"\u27a1\ufe0f")+'</div><div style="flex:1"><div class="industry-name">'+ind.name+'<span class="industry-trend '+(ind.trend==="up"?"trend-up":"trend-stable")+'">'+(ind.trend==="up"?"上升通道":"稳定增长")+'</span></div><div class="industry-desc">'+ind.desc+'</div><div style="margin-top:10px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px"><span>未来10年潜力指数</span><span style="color:var(--accent);font-weight:700">'+ind.score+'分</span></div><div style="height:6px;border-radius:3px;background:rgba(255,255,255,.06)"><div style="height:100%;border-radius:3px;width:'+ind.score+'%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 1.2s"></div></div></div></div></div>';
+    });
+    html+='</div>';
+  }
+
+  // Recommendations
+  html+='<div class="result-section"><div class="result-section-title"><span class="dot"></span>为你推荐的院校与专业</div><div style="font-size:13px;color:var(--text-dim);margin-bottom:16px">综合你的性格（'+persona.name+'）、学科兴趣和行业偏好，针对'+answers.province+scoreTier.tier+'匹配</div>';
+  matched.forEach((m,idx)=>{
+    const matchScore=Math.max(62,100-Math.abs(m.score-answers.score)*2+Math.floor(Math.random()*8));
+    const typeBg=m.type==="冲刺"?"rgba(255,82,82,.15)":m.type==="稳妥"?"rgba(255,215,64,.15)":"rgba(105,240,174,.15)";
+    const typeClr=m.type==="冲刺"?"var(--danger)":m.type==="稳妥"?"var(--gold)":"var(--success)";
+    const typeIcon=m.type==="冲刺"?"\u26a1":m.type==="稳妥"?"\u2705":"\ud83d\udee1\ufe0f";
+    const indData=INDUSTRY_DATA[m.industry];
+    html+='<div class="rec-card"><div class="rec-rank">'+(idx+1)+'</div><div class="rec-major">'+m.major+'</div><div class="rec-school">\ud83c\udfeb '+m.school+'\uff08'+m.province+'\uff09</div><div class="rec-meta"><span>\ud83d\udcca 近年录取约 '+m.score+' 分</span><span>\ud83c\udfaf 匹配度 '+matchScore+'%</span></div><div class="score-match"><span style="font-size:20px">'+typeIcon+'</span><span style="color:var(--text-dim)">你的分数 <strong style="color:var(--accent)">'+answers.score+'</strong> \u00b7 该校近年 <strong style="color:var(--accent)">'+m.score+'</strong> 分 \u00b7 <strong style="color:var(--accent)">'+m.type+'志愿</strong></span></div><div class="rec-tags"><span class="rec-tag">'+(indData?indData.name:m.industry)+'</span><span class="rec-tag" style="background:'+typeBg+';color:'+typeClr+'">'+m.type+'档</span></div><div class="rec-reason">\ud83d\udca1 '+m.reason+'</div></div>';
+  });
+  html+='</div>';
+
+  // Action plan
+  html+='<div class="result-section"><div class="result-section-title"><span class="dot"></span>接下来你可以做什么</div><div class="card"><div style="display:flex;flex-direction:column;gap:14px">';
+  const actionSteps=[
+    {n:"1",bg:"rgba(0,229,255,.15)",title:"查官网确认选科要求",desc:"去各高校本科招生网，确认"+combo+"组合是否符合专业要求"},
+    {n:"2",bg:"rgba(124,77,255,.15)",title:"了解专业真实内容",desc:'去知乎/B站搜索"'+(matched[0]?matched[0].major:"专业")+' 真实就读体验"，避免望文生义'},
+    {n:"3",bg:"rgba(0,255,180,.15)",title:"关注一分一段表",desc:"高考出分后，根据"+answers.province+"一分一段表将分数转换为位次，再对照往年录取位次"},
+    {n:"4",bg:"rgba(255,215,64,.15)",title:"设置冲稳保志愿梯度",desc:"冲刺（高5-15分）+ 稳妥（\u00b15分）+ 保底（低10-20分），各档2-3所"}
+  ];
+  actionSteps.forEach(s=>{
+    html+='<div style="display:flex;gap:12px;align-items:flex-start"><div style="width:32px;height:32px;border-radius:50%;background:'+s.bg+';display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">'+s.n+'</div><div><div style="font-weight:600;font-size:14px;margin-bottom:2px">'+s.title+'</div><div style="font-size:12px;color:var(--text-dim)">'+s.desc+'</div></div></div>';
+  });
+  html+='</div></div></div>';
+
+  // Disclaimer
+  html+='<div style="text-align:center;padding:20px 0 10px;font-size:11px;color:rgba(255,255,255,.3);line-height:1.6">\u26a0\ufe0f 以上推荐仅供参考，录取分数线每年波动，请以各省教育考试院和高校官方发布为准。<br>建议结合位次、选科要求、专业真实情况综合判断。</div>';
+
+  // Restart
+  html+='<div class="restart-wrap"><button class="btn btn-back" onclick="location.reload()">\ud83d\udd04 重新测试</button></div>';
+
+  document.getElementById("result-page").classList.remove("hidden");
+  document.getElementById("result-page").innerHTML=html;
+  document.getElementById("step-loading").classList.add("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+// Init starfield
+(function initStars(){
+  const sf=document.getElementById("starfield");
+  for(let i=0;i<180;i++){
+    const s=document.createElement("div");s.className="star";
+    const size=Math.random()*2.2+0.3;
+    s.style.cssText="width:"+size+"px;height:"+size+"px;top:"+(Math.random()*100)+"%;left:"+(Math.random()*100)+"%;--dur:"+(Math.random()*3+1).toFixed(1)+"s;animation-delay:"+(Math.random()*5).toFixed(1)+"s;opacity:"+(Math.random()*0.7+0.1);
+    sf.appendChild(s);
+  }
+})();
+
+// Bind start button
+ document.getElementById("startBtn").addEventListener("click",function(){goStep(1);});
+
+// Fill province dropdown
+(function(){
+  const sel=document.getElementById("userProvince");
+  if(!sel)return;
+  PROVINCES.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;sel.appendChild(o);});
+})();
+
+// Toggle score/rank mode
+function toggleRankMode(){
+  const mode=document.querySelector('input[name="rankMode"]:checked')?.value||"score";
+  const scoreWrap=document.getElementById("scoreInputWrap");
+  const rankWrap=document.getElementById("rankInputWrap");
+  const scoreLabel=document.getElementById("modeScoreLabel");
+  const rankLabel=document.getElementById("modeRankLabel");
+  if(mode==="score"){
+    scoreWrap.style.display="";rankWrap.style.display="none";
+    scoreLabel.style.borderColor="var(--accent2)";scoreLabel.style.background="rgba(124,77,255,.1)";
+    rankLabel.style.borderColor="rgba(255,255,255,.1)";rankLabel.style.background="transparent";
+  } else {
+    scoreWrap.style.display="none";rankWrap.style.display="";
+    rankLabel.style.borderColor="var(--accent2)";rankLabel.style.background="rgba(124,77,255,.1)";
+    scoreLabel.style.borderColor="rgba(255,255,255,.1)";scoreLabel.style.background="transparent";
+  }
+  updateScoreHint();
+}
+// Init mode style
+toggleRankMode();
+
+</script>
+</body>
+</html>
