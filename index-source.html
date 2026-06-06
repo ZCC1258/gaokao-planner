@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>星辰导航 · 高考志愿规划</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap');
+:root{--bg-deep:#05051a;--bg-card:rgba(15,23,62,.85);--accent:#00e5ff;--accent2:#7c4dff;--accent3:#00ffb4;--gold:#ffd740;--text:#e8eaf6;--text-dim:#9fa8da;--danger:#ff5252;--success:#69f0ae}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{-webkit-text-size-adjust:100%}body{font-family:"Noto Sans SC",sans-serif;background:var(--bg-deep);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+#starfield{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite alternate}
+@keyframes twinkle{0%{opacity:.2;transform:scale(.8)}100%{opacity:1;transform:scale(1.2)}}
+.shooting-star{position:fixed;width:120px;height:2px;background:linear-gradient(90deg,rgba(0,229,255,0),#00e5ff,#fff);border-radius:50%;animation:shoot 1.8s ease-out infinite;opacity:0;z-index:0}
+@keyframes shoot{0%{transform:translateX(0) translateY(0) rotate(-35deg);opacity:1}100%{transform:translateX(-400px) translateY(200px) rotate(-35deg);opacity:0}}
+.main-wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:40px 20px 80px}
+.hero{text-align:center;padding:60px 0 40px}.hero-badge{display:inline-block;padding:6px 20px;border:1px solid var(--accent);border-radius:20px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;animation:pulse-border 2s ease-in-out infinite}
+@keyframes pulse-border{0%,100%{box-shadow:0 0 8px rgba(0,229,255,.3)}50%{box-shadow:0 0 20px rgba(0,229,255,.6)}}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(36px,7vw,64px);font-weight:900;background:linear-gradient(135deg,#00e5ff 0%,#7c4dff 50%,#ffd740 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:16px}
+.hero p{font-size:16px;color:var(--text-dim);line-height:1.8;max-width:520px;margin:0 auto}.hero-tags{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}.hero-tag{padding:5px 14px;border-radius:14px;font-size:12px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--accent)}
+.progress-wrap{margin:30px 0 40px}.progress-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);margin-bottom:8px}.progress-bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);position:relative;overflow:hidden}.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .6s cubic-bezier(.4,0,.2,1);position:relative}
+.progress-fill::after{content:'';position:absolute;right:0;top:-3px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse-dot 1.5s ease-in-out infinite}@keyframes pulse-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+.card{background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid rgba(124,77,255,.2);border-radius:20px;padding:36px 32px;margin-bottom:28px;position:relative;overflow:hidden;animation:cardIn .5s ease-out}@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent3))}
+.card-step{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}.card-title{font-size:22px;font-weight:700;margin-bottom:6px}.card-desc{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:24px}
+.scenario-block{margin-bottom:28px}.scenario-q{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;line-height:1.6}.scenario-q-num{width:28px;height:28px;border-radius:50%;flex-shrink:0;background:rgba(124,77,255,.2);border:1px solid rgba(124,77,255,.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent2)}
+.scenario-opts{display:flex;flex-direction:column;gap:8px}.scenario-opt{padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.07);cursor:pointer;transition:all .2s;font-size:13px;line-height:1.6;font-family:inherit;color:var(--text);text-align:left;width:100%;-webkit-user-select:none;user-select:none}.scenario-opt:active{transform:scale(.98);background:rgba(124,77,255,.12)}.scenario-opt:hover{border-color:rgba(124,77,255,.4);background:rgba(124,77,255,.07)}.scenario-opt.selected{border-color:var(--accent);background:rgba(0,229,255,.08);box-shadow:0 0 12px rgba(0,229,255,.1)}
+.sopt-letter{display:inline-flex;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.08);text-align:center;line-height:22px;font-size:11px;font-weight:700;margin-right:8px;flex-shrink:0;align-items:center;justify-content:center}.scenario-opt.selected .sopt-letter{background:var(--accent);color:#05051a}
+.q-dots{display:flex;gap:6px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}.q-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s}.q-dot.done{background:var(--accent2);box-shadow:0 0 6px rgba(124,77,255,.5)}
+.scene-group{margin-bottom:20px}.scene-group-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}.scene-group-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.tag-options{display:flex;flex-wrap:wrap;gap:10px}.tag-btn{padding:10px 18px;border-radius:25px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);color:var(--text);font-size:13px;cursor:pointer;transition:all .2s;font-family:inherit;-webkit-user-select:none;user-select:none}.tag-btn:active{transform:scale(.95)}.tag-btn:hover{border-color:var(--accent2)}.tag-btn.selected{background:rgba(124,77,255,.25);border-color:var(--accent2);color:#fff;box-shadow:0 0 12px rgba(124,77,255,.3)}.tag-btn.rejected{background:rgba(255,82,82,.15);border-color:var(--danger);color:var(--danger);text-decoration:line-through;opacity:.7}
+.tag-hint{display:block;font-size:11px;color:var(--text-dim);margin-top:3px;font-weight:300;line-height:1.4}.tag-btn.selected .tag-hint{color:rgba(255,255,255,.7)}
+.tag-card-options{display:flex;flex-wrap:wrap;gap:10px}.tag-card{padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:all .2s;font-family:inherit;color:var(--text);text-align:left;width:calc(50% - 5px);min-width:200px;position:relative;-webkit-user-select:none;user-select:none}.tag-card:active{transform:scale(.97)}.tag-card:hover{border-color:rgba(124,77,255,.4);background:rgba(124,77,255,.06)}.tag-card.selected{border-color:var(--accent);background:rgba(0,229,255,.08);box-shadow:0 0 12px rgba(0,229,255,.1)}.tag-card.rejected{border-color:var(--danger);background:rgba(255,82,82,.08);opacity:.6}
+.tag-card-name{font-size:13px;font-weight:600;margin-bottom:3px}.tag-card-hint{font-size:11px;color:var(--text-dim);line-height:1.4}.tag-card.selected .tag-card-hint{color:rgba(255,255,255,.6)}.tag-card .reject-mark{display:none;font-size:10px;color:var(--danger);margin-top:4px}.tag-card.rejected .reject-mark{display:block}
+.sub-label{font-size:12px;color:var(--text-dim);margin-top:24px;margin-bottom:8px;display:flex;align-items:center;gap:6px}.sub-label::before{content:'\2715';color:var(--danger);font-weight:700}
+.value-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:22px 24px;margin-bottom:18px;transition:border-color .25s}.value-card:hover{border-color:rgba(124,77,255,.25)}.value-card-title{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}.value-card-desc{font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:14px}.value-card-anchors{display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:10px}
+.val-slider-row{display:flex;align-items:center;gap:14px;margin-bottom:4px}.val-slider-row input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:4px;outline:none;cursor:pointer;background:linear-gradient(90deg,#7c4dff 0%,#00e5ff 100%);opacity:.65;transition:opacity .2s}.val-slider-row input[type=range]:hover{opacity:.9}
+.val-slider-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--accent2);box-shadow:0 0 12px rgba(124,77,255,.5);cursor:pointer}.val-slider-row input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.1)}
+.val-slider-row input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--accent2);box-shadow:0 0 12px rgba(124,77,255,.5);cursor:pointer}
+.val-num{display:inline-block;min-width:44px;text-align:center;font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.val-label-text{font-size:11px;color:var(--text-dim);text-align:right;margin-top:6px;font-style:italic}
+.input-wrap{margin-bottom:16px}.input-label{font-size:13px;color:var(--text-dim);margin-bottom:8px;display:block}.text-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;color:var(--text);font-size:16px;font-family:inherit;transition:border-color .2s;outline:none}.text-input:focus{border-color:var(--accent)}.text-input::placeholder{color:rgba(255,255,255,.2)}select.text-input{cursor:pointer}select.text-input option{background:#1a1a3e;color:var(--text)}
+.nav-btns{display:flex;gap:14px;margin-top:32px;justify-content:space-between}.btn{padding:14px 32px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:8px}
+.btn-back{background:rgba(255,255,255,.06);color:var(--text-dim);border:1.5px solid rgba(255,255,255,.1)}.btn-back:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.btn-next{background:linear-gradient(135deg,var(--accent2),#6c3dd1);color:#fff;margin-left:auto;box-shadow:0 4px 20px rgba(124,77,255,.4)}.btn-next:hover{box-shadow:0 6px 28px rgba(124,77,255,.6);transform:translateY(-1px)}.btn-next:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#00bfa5);color:#05051a;font-weight:700;box-shadow:0 4px 20px rgba(0,229,255,.3)}.btn-primary:hover{box-shadow:0 6px 28px rgba(0,229,255,.5);transform:translateY(-1px)}
+.result-header{text-align:center;padding:20px 0 30px}.result-avatar{width:80px;height:80px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 0 30px rgba(124,77,255,.5);animation:pulse-glow 2s ease-in-out infinite}@keyframes pulse-glow{0%,100%{box-shadow:0 0 30px rgba(124,77,255,.5)}50%{box-shadow:0 0 50px rgba(0,229,255,.6)}}
+.result-name{font-size:26px;font-weight:700;margin-bottom:6px}.result-type{font-size:14px;color:var(--accent);font-weight:500;letter-spacing:1px}.result-desc{font-size:14px;color:var(--text-dim);line-height:1.8;max-width:560px;margin:12px auto 0}
+.rec-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:16px;transition:all .25s;position:relative;overflow:hidden}.rec-card:hover{border-color:rgba(0,229,255,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}.rec-rank{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.rec-major{font-size:18px;font-weight:700;margin-bottom:4px}.rec-school{font-size:13px;color:var(--accent3);margin-bottom:10px}.rec-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--text-dim);margin-bottom:12px}.rec-meta span{display:flex;align-items:center;gap:4px}.rec-tags{display:flex;gap:8px;flex-wrap:wrap}.rec-tag{padding:3px 10px;border-radius:10px;font-size:11px;background:rgba(0,229,255,.1);color:var(--accent)}.rec-reason{font-size:13px;color:var(--text-dim);line-height:1.7;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)}
+.score-match{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.15);border-radius:12px;margin-top:12px;font-size:13px}
+.industry-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start}.industry-icon{width:48px;height:48px;flex-shrink:0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}.industry-name{font-size:15px;font-weight:600;margin-bottom:4px}.industry-desc{font-size:12px;color:var(--text-dim);line-height:1.6}.industry-trend{display:inline-block;margin-top:8px;padding:2px 10px;border-radius:8px;font-size:11px;font-weight:600}.trend-up{background:rgba(105,240,174,.15);color:var(--success)}.trend-stable{background:rgba(255,215,64,.15);color:var(--gold)}
+.result-section{margin-bottom:32px}.result-section-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}.result-section-title .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.trait-bars{display:flex;flex-direction:column;gap:14px}.trait-bar-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}.trait-bar-name{color:var(--text-dim)}.trait-bar-val{font-weight:600;color:var(--accent)}.trait-bar-track{height:6px;border-radius:3px;background:rgba(255,255,255,.06)}.trait-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.hidden{display:none!important}.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:12px 28px;border-radius:12px;background:rgba(124,77,255,.95);color:#fff;font-size:14px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);z-index:999;animation:toastIn .3s ease-out;pointer-events:none}@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.restart-wrap{text-align:center;padding:30px 0}@keyframes loadAnim{0%{width:0}30%{width:40%}60%{width:70%}100%{width:100%}}
+/* ===== Mobile-first ===== */
+@media(max-width:840px){
+.main-wrap{padding:24px 14px 110px}
+.card{margin-bottom:16px;padding-bottom:20px}
+.hero{padding:40px 0 28px}
+.hero h1{font-size:clamp(32px,8vw,48px)}
+.hero p{font-size:14px}
+.card{padding:24px 16px;border-radius:16px}
+.card-title{font-size:18px}
+.card-desc{font-size:13px}
+.card-step{font-size:10px}
+/* Step 0 feature cards stack */
+.step0-features{flex-direction:column!important}
+.step0-features>div{min-width:unset!important}
+/* Scenario questions */
+.scenario-q{font-size:14px;gap:8px}
+.scenario-opt{padding:11px 14px;font-size:13px;line-height:1.5;border-radius:10px}
+.sopt-letter{width:20px;height:20px;line-height:20px;font-size:10px;margin-right:6px}
+.scenario-q-num{width:24px;height:24px;font-size:11px}
+/* Tag buttons */
+.tag-btn{padding:8px 14px;font-size:12px;border-radius:20px}
+.tag-hint{font-size:10px}
+/* Tag cards - single column on mobile */
+.tag-card{width:100%!important;min-width:unset!important;padding:10px 14px}
+/* Value cards */
+.value-card{padding:16px 14px;border-radius:12px}
+.value-card-title{font-size:14px}
+.value-card-desc{font-size:11px;margin-bottom:10px}
+.value-card-anchors{font-size:10px}
+/* Slider - bigger thumb for touch */
+.val-slider-row input[type=range]{height:10px}
+.val-slider-row input[type=range]::-webkit-slider-thumb{width:30px;height:30px;border-width:3px}
+.val-slider-row input[type=range]::-moz-range-thumb{width:30px;height:30px;border-width:3px}
+.val-num{font-size:18px;min-width:38px}
+.val-label-text{font-size:10px}
+/* Buttons - full width, taller for thumb */
+.nav-btns{position:sticky;bottom:0;z-index:50;display:flex;gap:10px;padding:14px 0 4px;background:linear-gradient(0deg,rgba(10,8,40,.97) 70%,rgba(10,8,40,0));flex-direction:row;margin-top:20px}
+.btn{width:100%;justify-content:center;padding:15px 20px;font-size:15px;border-radius:12px;min-height:50px}
+.btn-back{flex:0 0 auto;width:auto;padding:15px 18px}
+.btn-next{margin-left:0;flex:1}
+.btn-primary{flex:1}
+/* Text input */
+.text-input{padding:13px 14px;font-size:16px;border-radius:10px}
+/* Progress */
+.progress-wrap{margin:20px 0 28px}
+/* Result page */
+.result-name{font-size:22px}
+.result-desc{font-size:13px}
+.rec-card{padding:18px;border-radius:12px}
+.rec-major{font-size:16px}
+.rec-school{font-size:12px}
+.rec-meta{font-size:11px;gap:10px}
+.rec-reason{font-size:12px}
+.rec-rank{width:28px;height:28px;font-size:12px;top:12px;right:12px}
+.score-match{padding:10px 12px;font-size:12px;gap:8px}
+.industry-card{padding:14px;border-radius:12px;gap:12px}
+.industry-icon{width:40px;height:40px;font-size:18px;border-radius:10px}
+.industry-name{font-size:14px}
+.industry-desc{font-size:11px}
+.result-section-title{font-size:15px}
+.trait-bar-label{font-size:12px}
+/* Scene group */
+.scene-group-title{font-size:10px;letter-spacing:1.5px}
+/* Sub-label */
+.sub-label{font-size:11px;margin-top:18px;margin-bottom:6px}
+/* Toast */
+.toast{bottom:max(80px,calc(12px + env(safe-area-inset-bottom)));font-size:13px;padding:10px 22px}
+/* q-dots */
+.q-dot{width:7px;height:7px}
+/* Restart */
+.restart-wrap{padding:20px 0 40px}
+/* Result page mobile */
+#result-page .nav-btns,.result-section .nav-btns{position:static}
+.result-section{margin-bottom:20px}
+.result-header{padding:12px 0 20px}
+.result-avatar{width:64px;height:64px;font-size:28px}
+.trait-bar-track{height:5px}
+}
+</style>
+</head>
+<body>
+<div id="starfield"></div>
+<div class="shooting-star" style="top:8%;left:75%;animation-delay:1.2s"></div>
+<div class="shooting-star" style="top:25%;left:85%;animation-delay:4.5s"></div>
+<div class="shooting-star" style="top:5%;left:60%;animation-delay:7.8s"></div>
+<div class="main-wrap">
+<div class="hero"><div class="hero-badge">✦ AI 高考志愿规划系统</div><h1>星辰导航</h1><p>为你量身定制未来十年志愿方案<br>性格测评 × 行业前景 × 分数匹配 × 全国覆盖</p><div class="hero-tags"><span class="hero-tag">全国31省</span><span class="hero-tag">全分数段</span><span class="hero-tag">12种选科组合</span><span class="hero-tag">未来10年展望</span></div></div>
+<div class="progress-wrap"><div class="progress-labels"><span id="progressLabel">准备开始</span><span id="progressPct">0%</span></div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div></div>
+<div class="card" id="step-0"><div class="card-step">准备就绪</div><div class="card-title">你好，未来的大学生 👋</div><div class="card-desc">本测试约需 5 分钟，用生活化的小问题认识你，再结合行业趋势推荐最适合的专业和院校。</div>
+<div class="step0-features" style="display:flex;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(124,77,255,.1);border:1px solid rgba(124,77,255,.2)"><div style="font-size:24px;margin-bottom:8px">💬</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">生活化题目</div><div style="font-size:12px;color:var(--text-dim)">没有抽象概念，用日常小事找到你的特点</div></div>
+<div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2)"><div style="font-size:24px;margin-bottom:8px">🚀</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">行业前景</div><div style="font-size:12px;color:var(--text-dim)">未来10年高潜力行业深度分析</div></div>
+<div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(0,255,180,.1);border:1px solid rgba(0,255,180,.2)"><div style="font-size:24px;margin-bottom:8px">🎯</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">志愿推荐</div><div style="font-size:12px;color:var(--text-dim)">结合分数精准推荐院校专业</div></div></div>
+<div class="nav-btns" style="justify-content:flex-end"><button class="btn btn-next" id="startBtn">开始测评 →</button></div></div>
+<div class="card hidden" id="step-1"><div class="card-step">第一步 · 基本信息</div><div class="card-title">先了解一下你的基本情况</div><div class="card-desc">这些信息帮助更精准地推荐</div>
+<div class="input-wrap"><label class="input-label">你的姓名或昵称</label><input type="text" class="text-input" id="userName" placeholder="可选，结果页会显示"></div>
+<div class="input-wrap"><label class="input-label">你的省份</label><select class="text-input" id="userProvince" onchange="updateScoreHint()" style="-webkit-appearance:none;appearance:none;background-image:url(\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path d=%22M2 4l4 4 4-4%22 fill=%22none%22 stroke=%22%239fa8da%22 stroke-width=%221.5%22/></svg>\');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px"><option value="">请选择省份</option></select></div>
+<div class="input-wrap"><label class="input-label">选科组合</label><select class="text-input" id="userSubjectCombo" style="-webkit-appearance:none;appearance:none;background-image:url(\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path d=%22M2 4l4 4 4-4%22 fill=%22none%22 stroke=%22%239fa8da%22 stroke-width=%221.5%22/></svg>\');background-repeat:no-repeat;background-position:right 14px center;padding-right:36px"><option value="物化生">物化生（最常见）</option><option value="物化政">物化政</option><option value="物化地">物化地</option><option value="物生政">物生政</option><option value="物生地">物生地</option><option value="物政地">物政地</option><option value="史政地">史政地（文科）</option><option value="史政生">史政生</option><option value="史化生">史化生</option><option value="史化地">史化地</option><option value="史化政">史化政</option></select></div>
+<div class="input-wrap"><label class="input-label">分数或排名（二选一）</label><div style="display:flex;gap:8px;margin-bottom:10px"><label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:6px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);transition:all .2s" id="modeScoreLabel"><input type="radio" name="rankMode" value="score" checked onchange="toggleRankMode()" style="accent-color:var(--accent2)">按分数</label><label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;padding:6px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);transition:all .2s" id="modeRankLabel"><input type="radio" name="rankMode" value="rank" onchange="toggleRankMode()" style="accent-color:var(--accent2)">按省排名</label></div><div id="scoreInputWrap"><input type="number" class="text-input" id="userScore" placeholder="输入模拟考分数" oninput="updateScoreHint()" min="200" max="800"></div><div id="rankInputWrap" style="display:none"><input type="number" class="text-input" id="userRank" placeholder="输入全省排名" oninput="updateScoreHint()" min="100" max="500000"></div></div>
+<div id="scoreHint" style="padding:10px 14px;border-radius:10px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.12);font-size:12px;margin-bottom:16px"><span style="color:var(--text-dim)">选择省份并输入分数后，自动判断分档</span></div>
+<div class="input-wrap"><label class="input-label">意向大学城市（多选）</label><div class="tag-options" id="cityTags">
+<button class="tag-btn" data-val="北京" onclick="toggleTag(this,'cities')">北京</button>
+<button class="tag-btn" data-val="上海" onclick="toggleTag(this,'cities')">上海</button>
+<button class="tag-btn" data-val="广州" onclick="toggleTag(this,'cities')">广州</button>
+<button class="tag-btn" data-val="深圳" onclick="toggleTag(this,'cities')">深圳</button>
+<button class="tag-btn" data-val="南京" onclick="toggleTag(this,'cities')">南京</button>
+<button class="tag-btn" data-val="杭州" onclick="toggleTag(this,'cities')">杭州</button>
+<button class="tag-btn" data-val="成都" onclick="toggleTag(this,'cities')">成都</button>
+<button class="tag-btn" data-val="武汉" onclick="toggleTag(this,'cities')">武汉</button>
+<button class="tag-btn" data-val="西安" onclick="toggleTag(this,'cities')">西安</button>
+<button class="tag-btn" data-val="天津" onclick="toggleTag(this,'cities')">天津</button>
+<button class="tag-btn" data-val="重庆" onclick="toggleTag(this,'cities')">重庆</button>
+<button class="tag-btn" data-val="长沙" onclick="toggleTag(this,'cities')">长沙</button>
+<button class="tag-btn" data-val="哈尔滨" onclick="toggleTag(this,'cities')">哈尔滨</button>
+<button class="tag-btn" data-val="长春" onclick="toggleTag(this,'cities')">长春</button>
+<button class="tag-btn" data-val="沈阳" onclick="toggleTag(this,'cities')">沈阳</button>
+<button class="tag-btn" data-val="大连" onclick="toggleTag(this,'cities')">大连</button>
+<button class="tag-btn" data-val="济南" onclick="toggleTag(this,'cities')">济南</button>
+<button class="tag-btn" data-val="青岛" onclick="toggleTag(this,'cities')">青岛</button>
+<button class="tag-btn" data-val="合肥" onclick="toggleTag(this,'cities')">合肥</button>
+<button class="tag-btn" data-val="郑州" onclick="toggleTag(this,'cities')">郑州</button>
+<button class="tag-btn" data-val="苏州" onclick="toggleTag(this,'cities')">苏州</button>
+<button class="tag-btn" data-val="厦门" onclick="toggleTag(this,'cities')">厦门</button>
+<button class="tag-btn" data-val="兰州" onclick="toggleTag(this,'cities')">兰州</button>
+<button class="tag-btn" data-val="福州" onclick="toggleTag(this,'cities')">福州</button>
+<button class="tag-btn" data-val="昆明" onclick="toggleTag(this,'cities')">昆明</button>
+<button class="tag-btn" data-val="无所谓" onclick="toggleTag(this,'cities')">无所谓</button>
+</div></div>
+<div class="sub-label">明确不想去的城市</div><div class="tag-options" id="rejectCityTags">
+<button class="tag-btn" data-val="北京" onclick="toggleReject(this,'rejectCities')">北京</button>
+<button class="tag-btn" data-val="上海" onclick="toggleReject(this,'rejectCities')">上海</button>
+<button class="tag-btn" data-val="广州" onclick="toggleReject(this,'rejectCities')">广州</button>
+<button class="tag-btn" data-val="深圳" onclick="toggleReject(this,'rejectCities')">深圳</button>
+<button class="tag-btn" data-val="南京" onclick="toggleReject(this,'rejectCities')">南京</button>
+<button class="tag-btn" data-val="杭州" onclick="toggleReject(this,'rejectCities')">杭州</button>
+<button class="tag-btn" data-val="成都" onclick="toggleReject(this,'rejectCities')">成都</button>
+<button class="tag-btn" data-val="武汉" onclick="toggleReject(this,'rejectCities')">武汉</button>
+<button class="tag-btn" data-val="西安" onclick="toggleReject(this,'rejectCities')">西安</button>
+<button class="tag-btn" data-val="天津" onclick="toggleReject(this,'rejectCities')">天津</button>
+<button class="tag-btn" data-val="重庆" onclick="toggleReject(this,'rejectCities')">重庆</button>
+<button class="tag-btn" data-val="长沙" onclick="toggleReject(this,'rejectCities')">长沙</button>
+<button class="tag-btn" data-val="哈尔滨" onclick="toggleReject(this,'rejectCities')">哈尔滨</button>
+<button class="tag-btn" data-val="沈阳" onclick="toggleReject(this,'rejectCities')">沈阳</button>
+<button class="tag-btn" data-val="郑州" onclick="toggleReject(this,'rejectCities')">郑州</button>
+<button class="tag-btn" data-val="合肥" onclick="toggleReject(this,'rejectCities')">合肥</button>
+</div>
+<div class="sub-label">明确不想学的专业方向（多选, 点第二次即为不感兴趣）</div><div class="tag-options" id="rejectMajorTags">
+<button class="tag-btn" data-val="临床医学" onclick="toggleReject(this,'rejectMajors')">临床医学<span class="tag-hint">学制长，课业重</span></button>
+<button class="tag-btn" data-val="口腔医学" onclick="toggleReject(this,'rejectMajors')">口腔医学<span class="tag-hint">分数极高</span></button>
+<button class="tag-btn" data-val="纯数学" onclick="toggleReject(this,'rejectMajors')">纯数学<span class="tag-hint">理论研究</span></button>
+<button class="tag-btn" data-val="纯物理" onclick="toggleReject(this,'rejectMajors')">纯物理<span class="tag-hint">基础科学</span></button>
+<button class="tag-btn" data-val="农学" onclick="toggleReject(this,'rejectMajors')">农学<span class="tag-hint">偏田野实践</span></button>
+<button class="tag-btn" data-val="地质" onclick="toggleReject(this,'rejectMajors')">地质/矿业<span class="tag-hint">工作地点偏远</span></button>
+<button class="tag-btn" data-val="土木" onclick="toggleReject(this,'rejectMajors')">土木工程<span class="tag-hint">工地为主</span></button>
+<button class="tag-btn" data-val="化工" onclick="toggleReject(this,'rejectMajors')">化学工程<span class="tag-hint">工厂环境</span></button>
+<button class="tag-btn" data-val="材料" onclick="toggleReject(this,'rejectMajors')">材料科学<span class="tag-hint">实验枯燥</span></button>
+<button class="tag-btn" data-val="环境" onclick="toggleReject(this,'rejectMajors')">环境工程<span class="tag-hint">就业面窄</span></button>
+<button class="tag-btn" data-val="外语" onclick="toggleReject(this,'rejectMajors')">外语类<span class="tag-hint">AI冲击大</span></button>
+<button class="tag-btn" data-val="法学" onclick="toggleReject(this,'rejectMajors')">法学<span class="tag-hint">考公内卷</span></button>
+</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(0)">← 返回</button><button class="btn btn-next" onclick="goStep(2)">下一步 →</button></div></div>
+<div class="card hidden" id="step-2"><div class="card-step">第二步 · 生活中的你</div><div class="card-title">回答8个小问题，看看你在生活中的真实样子</div><div class="card-desc">没有对错，选你最真实的想法就好</div>
+<div class="q-dots" id="q2-dots"></div>
+<div class="scene-group"><div class="scene-group-title">🌿 日常与学习</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">1</span>一个周末的下午，没有课也没有作业，你通常会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="1" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>整理笔记、把之前没搞懂的知识点弄明白，感觉很满足</button>
+<button class="scenario-opt" data-q="1" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>刷到一个有趣的博主，然后自己也想试着做点什么</button>
+<button class="scenario-opt" data-q="1" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>约同学出去逛街、聊天，或者在微信群里聊八卦</button>
+<button class="scenario-opt" data-q="1" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>修理坏了的东西，比如电脑卡了、手机摔了，想搞清楚怎么回事</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">2</span>期末考前一周，你会怎么安排复习？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="2" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>先列计划，按章节和题型一步步推进，有条不紊</button>
+<button class="scenario-opt" data-q="2" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>先理解原理，不死记，觉得理解了自然就能答出来</button>
+<button class="scenario-opt" data-q="2" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>和同学一起复习，互相提问，互相讲给对方听</button>
+<button class="scenario-opt" data-q="2" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>多刷题，通过做题来发现哪里不会，再针对性补</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">3</span>你们班要搞一次班级活动（比如晚会、比赛），你大概率会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="3" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>主动站出来承担策划工作，列清单、排时间表</button>
+<button class="scenario-opt" data-q="3" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>想一个特别有意思的点子，让活动变得不一样</button>
+<button class="scenario-opt" data-q="3" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>积极响应，帮忙拉人、宣传，活跃气氛</button>
+<button class="scenario-opt" data-q="3" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>主动负责现场布置或设备调试等具体执行工作</button>
+</div></div>
+</div>
+<div class="scene-group"><div class="scene-group-title">🔭 兴趣与好奇心</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">4</span>看到一篇让你印象深刻的新闻报道，它最可能是关于？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="4" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>某项科学研究的新发现，比如癌症治疗、AI突破</button>
+<button class="scenario-opt" data-q="4" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>某个独特的设计或创意产品，让人眼前一亮</button>
+<button class="scenario-opt" data-q="4" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>某个平凡人的感人故事，让人觉得世界有温暖</button>
+<button class="scenario-opt" data-q="4" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>某个真实的技术故障或工程事故，分析原因和教训</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">5</span>你有1个月带薪实习的机会，你会选？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="5" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>大学实验室，跟教授做科研项目</button>
+<button class="scenario-opt" data-q="5" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>一家创意公司，比如做设计、拍视频、写内容的团队</button>
+<button class="scenario-opt" data-q="5" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>一家医院或者公益机构，能帮到真实的人</button>
+<button class="scenario-opt" data-q="5" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>一家工厂或者车间，看真实的机器怎么运转</button>
+</div></div>
+</div>
+<div class="scene-group"><div class="scene-group-title">🤝 社交与工作</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">6</span>一个数学题你算了很久得到答案，但同学们算出的是另一个结果，你会？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="6" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>再检查一遍自己的计算过程，用不同方法验算，确认自己没错</button>
+<button class="scenario-opt" data-q="6" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>去网上搜类似题型的解法，看看有没有更巧妙的思路</button>
+<button class="scenario-opt" data-q="6" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>和同学讨论，听听他们的思路，也说说自己的想法</button>
+<button class="scenario-opt" data-q="6" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>不管结果，先问老师正确答案是什么，搞清楚原因</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">7</span>假设你参加了一个项目社团，要完成一个任务，你更愿意负责？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="7" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>整体规划：定目标、分任务、跟进度，确保按时完成</button>
+<button class="scenario-opt" data-q="7" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>内容创意：想创意方向、文案、视觉呈现，让作品出彩</button>
+<button class="scenario-opt" data-q="7" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>沟通联络：联系外部资源、协调成员关系、推进合作</button>
+<button class="scenario-opt" data-q="7" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>具体执行：做调研、整理数据、写代码、搭建模型</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">8</span>你最认同以下哪种对未来的想象？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="8" data-val="A" onclick="selectScenario(this)"><span class="sopt-letter">A</span>在一个领域成为专家，做别人做不到的研究</button>
+<button class="scenario-opt" data-q="8" data-val="B" onclick="selectScenario(this)"><span class="sopt-letter">B</span>做一份有美感、有创意的工作，每天都有新鲜感</button>
+<button class="scenario-opt" data-q="8" data-val="C" onclick="selectScenario(this)"><span class="sopt-letter">C</span>成为一个被需要的人，在团队里是不可或缺的角色</button>
+<button class="scenario-opt" data-q="8" data-val="D" onclick="selectScenario(this)"><span class="sopt-letter">D</span>做一件实实在在的事，比如建造什么、制造什么、改善什么</button>
+</div></div>
+</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(1)">← 返回</button><button class="btn btn-next" id="q2-next" disabled onclick="goStep(3)">下一步 →</button></div></div>
+<div class="card hidden" id="step-3"><div class="card-step">第三步 · 学科倾向</div><div class="card-title">关于高中课程和兴趣，你更接近哪个？</div><div class="card-desc">选你觉得最符合的，1-2个即可</div>
+<div class="scene-group"><div class="scene-group-title">📐 课程偏好</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">①</span>你在高中阶段，哪类课让你学起来最有感觉？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj1" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>物理 — 喜欢推导公式、理解原理、做实验</button>
+<button class="scenario-opt" data-q="subj1" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生物 — 喜欢记各种生命现象、人体机制</button>
+<button class="scenario-opt" data-q="subj1" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>数学/信息 — 喜欢逻辑推理、算题、编程</button>
+<button class="scenario-opt" data-q="subj1" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>化学/其他 — 喜欢实验操作，或文科类</button>
+</div></div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">②</span>你在网上最愿意主动去了解的内容是？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj2" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>科技类：AI、数码产品、互联网</button>
+<button class="scenario-opt" data-q="subj2" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生命健康类：医学知识、养生</button>
+<button class="scenario-opt" data-q="subj2" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>创意设计类：视觉、产品、建筑</button>
+<button class="scenario-opt" data-q="subj2" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>财经商业类：赚钱、行业趋势</button>
+</div></div></div>
+<div class="scene-group"><div class="scene-group-title">💡 深究世界</div>
+<div class="scenario-block"><div class="scenario-q"><span class="scenario-q-num">③</span>你最想深入了解世界的哪个方面？</div><div class="scenario-opts">
+<button class="scenario-opt" data-q="subj3" data-val="A" onclick="selectSubj(this)"><span class="sopt-letter">A</span>宇宙和物质的本质 — 大到星辰，小到粒子</button>
+<button class="scenario-opt" data-q="subj3" data-val="B" onclick="selectSubj(this)"><span class="sopt-letter">B</span>生命和健康 — 人类、疾病、药物</button>
+<button class="scenario-opt" data-q="subj3" data-val="C" onclick="selectSubj(this)"><span class="sopt-letter">C</span>信息与计算 — 数据、算法、代码</button>
+<button class="scenario-opt" data-q="subj3" data-val="D" onclick="selectSubj(this)"><span class="sopt-letter">D</span>人与社会 — 人的行为、组织、文化</button>
+</div></div></div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(2)">← 返回</button><button class="btn btn-next" id="q3-next" disabled onclick="goStep(4)">下一步 →</button></div></div>
+<div class="card hidden" id="step-4"><div class="card-step">第四步 · 职业价值观</div><div class="card-title">想象一下，你毕业后的第一份工作是什么样的？</div><div class="card-desc">拖动每个问题的滑块，表达你的真实想法</div>
+<div class="value-card"><div class="value-card-title">💰 你希望毕业后第一份工作月薪大概多少？</div><div class="value-card-desc">这不是贪心，是现实考虑 — 你觉得自己值得多少？</div><div class="value-card-anchors"><span>🤔 够生活费就行</span><span>💪 希望有不错的积蓄</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-salary" oninput="updateSlider('salary')"><span class="val-num" id="val-salary">50</span></div>
+<div class="val-label-text" id="label-salary">中等水平，够花就好</div></div>
+<div class="value-card"><div class="value-card-title">🛡️ 毕业三年后，你更希望处于哪种状态？</div><div class="value-card-desc">想象两个真实可能的画面，你更向往哪一个？</div><div class="value-card-anchors"><span>🏢 大企业稳定，节奏慢但安心</span><span>🚀 创业公司挑战多，成长快但有风险</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-stability" oninput="updateSlider('stability')"><span class="val-num" id="val-stability">50</span></div>
+<div class="val-label-text" id="label-stability">各有所长</div></div>
+<div class="value-card"><div class="value-card-title">📈 你最理想的工作节奏是什么样的？</div><div class="value-card-desc">你对"成长"的理解，更偏向哪一种？</div><div class="value-card-anchors"><span>🎓 有人带、有反馈、有明确路径</span><span>🧭 边做边学，自由探索自己来</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-growth" oninput="updateSlider('growth')"><span class="val-num" id="val-growth">50</span></div>
+<div class="val-label-text" id="label-growth">两者结合</div></div>
+<div class="value-card"><div class="value-card-title">⭐ 如果下面两个工作只能选一个，你会选？</div><div class="value-card-desc">纯粹从内心感受出发，哪一个让你更有价值感？</div><div class="value-card-anchors"><span>💊 参与研发一种新药，造福无数患者</span><span>📱 参与开发一款APP，服务千万用户</span></div>
+<div class="val-slider-row"><input type="range" min="0" max="100" value="50" id="slider-meaning" oninput="updateSlider('meaning')"><span class="val-num" id="val-meaning">50</span></div>
+<div class="val-label-text" id="label-meaning">两者都有意义</div></div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(3)">← 返回</button><button class="btn btn-next" onclick="goStep(5)">下一步 →</button></div></div>
+<div class="card hidden" id="step-5"><div class="card-step">第五步 · 行业偏好</div><div class="card-title">你对哪些行业更有好感？</div><div class="card-desc">可多选，我们会在这些方向中重点推荐（点击卡片查看行业说明）</div>
+<div class="tag-card-options" id="industryTags">
+<div class="tag-card" data-val="ai" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🤖 人工智能</div><div class="tag-card-hint">让机器像人一样思考、决策，包括大模型、自动驾驶、AI for Science</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="semiconductor" onclick="toggleIndustryCard(this)"><div class="tag-card-name">💾 芯片半导体</div><div class="tag-card-hint">设计制造CPU/GPU/存储芯片，是数字世界的"地基"，国产替代是国策</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="newenergy" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🔋 新能源</div><div class="tag-card-hint">光伏、风电、储能、氢能 — 双碳目标下的超级赛道</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="biomed" onclick="toggleIndustryCard(this)"><div class="tag-card-name">💊 生物医药</div><div class="tag-card-hint">研发新药物、新疗法，人口老龄化是最大的需求支撑</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="auto" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🚗 智能汽车</div><div class="tag-card-hint">电动车+智能化双轮驱动，汽车产业正在被重新定义</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="robot" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🦾 机器人</div><div class="tag-card-hint">人形机器人量产在即，工业与服务机器人全面渗透</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="finance" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🏦 金融科技</div><div class="tag-card-hint">用大数据、AI优化银行/证券/保险，FinTech是高薪方向</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="aerospace" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🚀 航空航天</div><div class="tag-card-hint">卫星互联网、商业火箭、深空探测，中国航天进入快车道</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="medical" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🏥 医疗器械</div><div class="tag-card-hint">CT、MRI、手术机器人 — 高端器械国产替代空间巨大</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="env" onclick="toggleIndustryCard(this)"><div class="tag-card-name">♻️ 绿色环保</div><div class="tag-card-hint">碳交易、污染治理、ESG咨询 — 政策强力驱动的新兴方向</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="media" onclick="toggleIndustryCard(this)"><div class="tag-card-name">🎮 数字创意</div><div class="tag-card-hint">游戏、动漫、短视频、元宇宙 — AIGC让创作门槛大幅降低</div><div class="reject-mark">✕ 排除此行业</div></div>
+<div class="tag-card" data-val="logistics" onclick="toggleIndustryCard(this)"><div class="tag-card-name">📦 智慧物流</div><div class="tag-card-hint">无人机配送、仓储自动化、供应链AI — 电商背后的基础设施</div><div class="reject-mark">✕ 排除此行业</div></div>
+</div>
+<div class="sub-label">明确不感兴趣的行业（点击已选卡片可切换为排除）</div>
+<div class="nav-btns"><button class="btn btn-back" onclick="goStep(4)">← 返回</button><button class="btn btn-primary" onclick="generateResult()">✨ 生成我的志愿报告</button></div></div>
+<div class="card hidden" id="step-loading"><div style="text-align:center;padding:60px 0"><div style="font-size:48px;margin-bottom:20px;animation:pulse-glow 1.5s ease-in-out infinite">🔭</div><div style="font-size:18px;font-weight:600;margin-bottom:8px">正在为你分析最佳志愿方案...</div><div style="font-size:13px;color:var(--text-dim);margin-bottom:24px">结合性格测评、行业趋势与分数匹配</div><div class="progress-bar"><div class="progress-fill" id="loadingBar" style="width:0%;animation:loadAnim 2.5s ease-in-out forwards"></div></div><div style="font-size:12px;color:var(--text-dim);margin-top:12px" id="loadingText">正在分析性格特质...</div></div></div>
+<div id="result-page" class="hidden"></div>
+</div>
+<div class="toast hidden" id="toast"></div>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
