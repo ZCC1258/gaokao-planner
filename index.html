@@ -131,7 +131,6 @@
 .trait-bar-track{height:5px}
 }
 </style>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </head>
 <body>
 <div id="starfield"></div>
@@ -139,8 +138,7 @@
 <div class="shooting-star" style="top:25%;left:85%;animation-delay:4.5s"></div>
 <div class="shooting-star" style="top:5%;left:60%;animation-delay:7.8s"></div>
 <div class="main-wrap">
-<div class="hero"><div class="hero-badge">✦ AI 高考志愿规划系统</div><h1>星辰导航</h1><p>为你量身定制未来十年志愿方案<br>性格测评 × 行业前景 × 分数匹配 × 全国覆盖</p><div class="hero-tags"><span class="hero-tag">全国31省</span><span class="hero-tag">全分数段</span><span class="hero-tag">12种选科组合</span><span class="hero-tag">未来10年展望</span><div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;gap:6px"><span id="busuanzi_container_site_pv">👁️ 已有 <span id="busuanzi_value_site_pv">-</span> 人次使用</span></div>
-</div></div>
+<div class="hero"><div class="hero-badge">✦ AI 高考志愿规划系统</div><h1>星辰导航</h1><p>为你量身定制未来十年志愿方案<br>性格测评 × 行业前景 × 分数匹配 × 全国覆盖</p><div class="hero-tags"><span class="hero-tag">全国31省</span><span class="hero-tag">全分数段</span><span class="hero-tag">12种选科组合</span><span class="hero-tag">未来10年展望</span></div></div>
 <div class="progress-wrap"><div class="progress-labels"><span id="progressLabel">准备开始</span><span id="progressPct">0%</span></div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div></div>
 <div class="card" id="step-0"><div class="card-step">准备就绪</div><div class="card-title">你好，未来的大学生 👋</div><div class="card-desc">本测试约需 5 分钟，用生活化的小问题认识你，再结合行业趋势推荐最适合的专业和院校。</div>
 <div class="step0-features" style="display:flex;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:200px;padding:16px;border-radius:14px;background:rgba(124,77,255,.1);border:1px solid rgba(124,77,255,.2)"><div style="font-size:24px;margin-bottom:8px">💬</div><div style="font-size:13px;font-weight:600;margin-bottom:4px">生活化题目</div><div style="font-size:12px;color:var(--text-dim)">没有抽象概念，用日常小事找到你的特点</div></div>
@@ -165,6 +163,20 @@
 <button class="tag-btn" data-val="西安" onclick="toggleTag(this,'cities')">西安</button>
 <button class="tag-btn" data-val="天津" onclick="toggleTag(this,'cities')">天津</button>
 <button class="tag-btn" data-val="重庆" onclick="toggleTag(this,'cities')">重庆</button>
+<button class="tag-btn" data-val="长沙" onclick="toggleTag(this,'cities')">长沙</button>
+<button class="tag-btn" data-val="哈尔滨" onclick="toggleTag(this,'cities')">哈尔滨</button>
+<button class="tag-btn" data-val="长春" onclick="toggleTag(this,'cities')">长春</button>
+<button class="tag-btn" data-val="沈阳" onclick="toggleTag(this,'cities')">沈阳</button>
+<button class="tag-btn" data-val="大连" onclick="toggleTag(this,'cities')">大连</button>
+<button class="tag-btn" data-val="济南" onclick="toggleTag(this,'cities')">济南</button>
+<button class="tag-btn" data-val="青岛" onclick="toggleTag(this,'cities')">青岛</button>
+<button class="tag-btn" data-val="合肥" onclick="toggleTag(this,'cities')">合肥</button>
+<button class="tag-btn" data-val="郑州" onclick="toggleTag(this,'cities')">郑州</button>
+<button class="tag-btn" data-val="苏州" onclick="toggleTag(this,'cities')">苏州</button>
+<button class="tag-btn" data-val="厦门" onclick="toggleTag(this,'cities')">厦门</button>
+<button class="tag-btn" data-val="兰州" onclick="toggleTag(this,'cities')">兰州</button>
+<button class="tag-btn" data-val="福州" onclick="toggleTag(this,'cities')">福州</button>
+<button class="tag-btn" data-val="昆明" onclick="toggleTag(this,'cities')">昆明</button>
 <button class="tag-btn" data-val="无所谓" onclick="toggleTag(this,'cities')">无所谓</button>
 </div></div>
 <div class="sub-label">明确不想去的城市</div><div class="tag-options" id="rejectCityTags">
@@ -179,13 +191,25 @@
 <button class="tag-btn" data-val="西安" onclick="toggleReject(this,'rejectCities')">西安</button>
 <button class="tag-btn" data-val="天津" onclick="toggleReject(this,'rejectCities')">天津</button>
 <button class="tag-btn" data-val="重庆" onclick="toggleReject(this,'rejectCities')">重庆</button>
+<button class="tag-btn" data-val="长沙" onclick="toggleReject(this,'rejectCities')">长沙</button>
+<button class="tag-btn" data-val="哈尔滨" onclick="toggleReject(this,'rejectCities')">哈尔滨</button>
+<button class="tag-btn" data-val="沈阳" onclick="toggleReject(this,'rejectCities')">沈阳</button>
+<button class="tag-btn" data-val="郑州" onclick="toggleReject(this,'rejectCities')">郑州</button>
+<button class="tag-btn" data-val="合肥" onclick="toggleReject(this,'rejectCities')">合肥</button>
 </div>
-<div class="sub-label">明确不想学的专业方向</div><div class="tag-options" id="rejectMajorTags">
-<button class="tag-btn" data-val="临床医学" onclick="toggleReject(this,'rejectMajors')">临床医学<span class="tag-hint">当医生，学制长，课业重</span></button>
-<button class="tag-btn" data-val="口腔医学" onclick="toggleReject(this,'rejectMajors')">口腔医学<span class="tag-hint">看牙，分数极高</span></button>
-<button class="tag-btn" data-val="纯数学/物理" onclick="toggleReject(this,'rejectMajors')">纯数学/物理<span class="tag-hint">理论研究，偏抽象</span></button>
-<button class="tag-btn" data-val="农学/林学" onclick="toggleReject(this,'rejectMajors')">农学/林学<span class="tag-hint">偏野外实践</span></button>
-<button class="tag-btn" data-val="地质/矿业" onclick="toggleReject(this,'rejectMajors')">地质/矿业<span class="tag-hint">工作地点偏远</span></button>
+<div class="sub-label">明确不想学的专业方向（多选, 点第二次即为不感兴趣）</div><div class="tag-options" id="rejectMajorTags">
+<button class="tag-btn" data-val="临床医学" onclick="toggleReject(this,'rejectMajors')">临床医学<span class="tag-hint">学制长，课业重</span></button>
+<button class="tag-btn" data-val="口腔医学" onclick="toggleReject(this,'rejectMajors')">口腔医学<span class="tag-hint">分数极高</span></button>
+<button class="tag-btn" data-val="纯数学" onclick="toggleReject(this,'rejectMajors')">纯数学<span class="tag-hint">理论研究</span></button>
+<button class="tag-btn" data-val="纯物理" onclick="toggleReject(this,'rejectMajors')">纯物理<span class="tag-hint">基础科学</span></button>
+<button class="tag-btn" data-val="农学" onclick="toggleReject(this,'rejectMajors')">农学<span class="tag-hint">偏田野实践</span></button>
+<button class="tag-btn" data-val="地质" onclick="toggleReject(this,'rejectMajors')">地质/矿业<span class="tag-hint">工作地点偏远</span></button>
+<button class="tag-btn" data-val="土木" onclick="toggleReject(this,'rejectMajors')">土木工程<span class="tag-hint">工地为主</span></button>
+<button class="tag-btn" data-val="化工" onclick="toggleReject(this,'rejectMajors')">化学工程<span class="tag-hint">工厂环境</span></button>
+<button class="tag-btn" data-val="材料" onclick="toggleReject(this,'rejectMajors')">材料科学<span class="tag-hint">实验枯燥</span></button>
+<button class="tag-btn" data-val="环境" onclick="toggleReject(this,'rejectMajors')">环境工程<span class="tag-hint">就业面窄</span></button>
+<button class="tag-btn" data-val="外语" onclick="toggleReject(this,'rejectMajors')">外语类<span class="tag-hint">AI冲击大</span></button>
+<button class="tag-btn" data-val="法学" onclick="toggleReject(this,'rejectMajors')">法学<span class="tag-hint">考公内卷</span></button>
 </div>
 <div class="nav-btns"><button class="btn btn-back" onclick="goStep(0)">← 返回</button><button class="btn btn-next" onclick="goStep(2)">下一步 →</button></div></div>
 <div class="card hidden" id="step-2"><div class="card-step">第二步 · 生活中的你</div><div class="card-title">回答8个小问题，看看你在生活中的真实样子</div><div class="card-desc">没有对错，选你最真实的想法就好</div>
@@ -302,7 +326,8 @@
 <div id="result-page" class="hidden"></div>
 </div>
 <div class="toast hidden" id="toast"></div>
-<script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script>// Inline app.js
 // gaokao-planner app.js - 通用版（全国、全分数段、选科组合）
 const STEPS=5;
 let currentStep=0;
@@ -376,70 +401,108 @@ const INDUSTRY_DATA={
 // ===== 全国院校专业数据库（按分数档+选科覆盖）=====
 const MAJOR_DB=[
   // ---- 985冲刺档 (超一本80+) ----
-  {major:"人工智能",school:"浙江大学",score:665,province:"浙江",industry:"ai",reason:"顶尖985，AI国际排名前列，就业顶级互联网+AI Lab",type:"冲刺",combos:["物化生","物化政","物化地","物生政"],traits:["analytical","creative"]},
-  {major:"计算机科学与技术",school:"南京大学",score:658,province:"江苏",industry:"ai",reason:"南大CS实力顶尖，AI方向有周志华团队，学术+就业双优",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
-  {major:"人工智能",school:"西安交通大学",score:648,province:"陕西",industry:"ai",reason:"C9名校，AI学科评估A+，西北地区首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical"]},
-  {major:"微电子科学与工程",school:"电子科技大学",score:645,province:"四川",industry:"semiconductor",reason:"电子类顶尖985，芯片方向就业华为海思/中芯国际",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"生物医学工程",school:"东南大学",score:640,province:"江苏",industry:"biomed",reason:"生医工全国前三，医疗器械+生物信息方向强",type:"冲刺",combos:["物化生"],traits:["analytical","social"]},
-  {major:"新能源科学与工程",school:"华中科技大学",score:638,province:"湖北",industry:"newenergy",reason:"能源动力顶尖，新能源方向就业宁德时代/比亚迪",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"临床医学(八年制)",school:"中南大学",score:642,province:"湖南",industry:"biomed",reason:"湘雅医学院，医学顶尖，八年直博",type:"冲刺",combos:["物化生"],traits:["social","analytical"]},
-  {major:"航空航天工程",school:"北京航空航天大学",score:655,province:"北京",industry:"aerospace",reason:"航空航天第一校，就业航天科技/科工集团",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"人工智能",school:"浙江大学",score:665,province:"浙江",city:"杭州",industry:"ai",reason:"顶尖985，AI国际排名前列，就业顶级互联网+AI Lab",type:"冲刺",combos:["物化生","物化政","物化地","物生政"],traits:["analytical","creative"]},
+  {major:"计算机科学与技术",school:"南京大学",score:658,province:"江苏",city:"南京",industry:"ai",reason:"南大CS实力顶尖，AI方向有周志华团队，学术+就业双优",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"人工智能",school:"西安交通大学",score:648,province:"陕西",city:"西安",industry:"ai",reason:"C9名校，AI学科评估A+，西北地区首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical"]},
+  {major:"微电子科学与工程",school:"电子科技大学",score:645,province:"四川",city:"成都",industry:"semiconductor",reason:"电子类顶尖985，芯片方向就业华为海思/中芯国际",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"生物医学工程",school:"东南大学",score:640,province:"江苏",city:"南京",industry:"biomed",reason:"生医工全国前三，医疗器械+生物信息方向强",type:"冲刺",combos:["物化生"],traits:["analytical","social"]},
+  {major:"新能源科学与工程",school:"华中科技大学",score:638,province:"湖北",city:"武汉",industry:"newenergy",reason:"能源动力顶尖，新能源方向就业宁德时代/比亚迪",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"临床医学(八年制)",school:"中南大学",score:642,province:"湖南",city:"长沙",industry:"biomed",reason:"湘雅医学院，医学顶尖，八年直博",type:"冲刺",combos:["物化生"],traits:["social","analytical"]},
+  {major:"航空航天工程",school:"北京航空航天大学",score:655,province:"北京",city:"北京",industry:"aerospace",reason:"航空航天第一校，就业航天科技/科工集团",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"数据科学与大数据技术",school:"复旦大学",score:662,province:"上海",city:"上海",industry:"ai",reason:"复旦数据科学全国领先，就业顶级金融科技/互联网",type:"冲刺",combos:["物化生","物化政"],traits:["analytical","leadership"]},
+  {major:"量子信息科学",school:"中国科学技术大学",score:660,province:"安徽",city:"合肥",industry:"ai",reason:"中科大前沿量子+AI，学术顶级，出国深造率高",type:"冲刺",combos:["物化生"],traits:["analytical","creative"]},
+  {major:"金融科技",school:"中央财经大学",score:650,province:"北京",city:"北京",industry:"finance",reason:"财经顶尖211，金融科技方向就业顶级投行/券商",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
+  {major:"智能制造工程",school:"上海交通大学",score:668,province:"上海",city:"上海",industry:"robot",reason:"上交机械+计算机交叉，智能制造新方向",type:"冲刺",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"生物科学",school:"武汉大学",score:635,province:"湖北",city:"武汉",industry:"biomed",reason:"武大生科院底蕴深厚，生物医药方向就业或深造俱佳",type:"冲刺",combos:["物化生"],traits:["analytical","social"]},
+  {major:"微电子科学与工程",school:"西北工业大学",score:630,province:"陕西",city:"西安",industry:"semiconductor",reason:"985国防特色，微电子方向有海军工应用",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"机器人工程",school:"哈尔滨工业大学",score:645,province:"黑龙江",city:"哈尔滨",industry:"robot",reason:"哈工大机器人全国第一，就业大疆/航天",type:"冲刺",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"网络空间安全",school:"北京邮电大学",score:635,province:"北京",city:"北京",industry:"ai",reason:"北邮网安全国顶尖，就业奇安信/360/华为安全",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","practical"]},
 
   // ---- 211核心档 (超一本40-80) ----
-  {major:"人工智能",school:"西安电子科技大学",score:595,province:"陕西",industry:"ai",reason:"西电AI实力顶尖，就业华为/腾讯/字节",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
-  {major:"计算机科学与技术",school:"北京邮电大学",score:610,province:"北京",industry:"ai",reason:"计算机+通信顶尖211，北京互联网就业首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
-  {major:"集成电路设计与集成系统",school:"杭州电子科技大学",score:575,province:"浙江",industry:"semiconductor",reason:"集成电路热门方向，长三角芯片企业就业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"新能源科学与工程",school:"华北电力大学(保定)",score:562,province:"河北",industry:"newenergy",reason:"电力行业顶尖，新能源方向就业国家电网",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"车辆工程(智能汽车方向)",school:"合肥工业大学",score:560,province:"安徽",industry:"auto",reason:"车辆工程顶尖211，智能汽车方向，就业比亚迪/蔚来",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"生物医学工程",school:"北京化工大学",score:558,province:"北京",industry:"biomed",reason:"211高校，生医工实力强，北京就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","social"]},
-  {major:"金融工程",school:"上海财经大学",score:618,province:"上海",industry:"finance",reason:"金融顶尖211，量化方向就业券商/基金",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
-  {major:"机器人工程",school:"哈尔滨工程大学",score:555,province:"黑龙江",industry:"robot",reason:"船舶+机器人特色211，国防背景",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"飞行器设计与工程",school:"南京航空航天大学",score:568,province:"江苏",industry:"aerospace",reason:"航空特色211，就业航空工业集团",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"储能科学与工程",school:"中国石油大学(华东)",score:552,province:"山东",industry:"newenergy",reason:"211高校，储能新兴方向，未来10年高潜力",type:"稳妥",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"人工智能",school:"西安电子科技大学",score:595,province:"陕西",city:"西安",industry:"ai",reason:"西电AI实力顶尖，就业华为/腾讯/字节",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"计算机科学与技术",school:"北京邮电大学",score:610,province:"北京",city:"北京",industry:"ai",reason:"计算机+通信顶尖211，北京互联网就业首选",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"集成电路设计与集成系统",school:"杭州电子科技大学",score:575,province:"浙江",city:"杭州",industry:"semiconductor",reason:"集成电路热门方向，长三角芯片企业就业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"新能源科学与工程",school:"华北电力大学(保定)",score:562,province:"河北",city:"保定",industry:"newenergy",reason:"电力行业顶尖，新能源方向就业国家电网",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"车辆工程(智能汽车方向)",school:"合肥工业大学",score:560,province:"安徽",city:"合肥",industry:"auto",reason:"车辆工程顶尖211，智能汽车方向，就业比亚迪/蔚来",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"生物医学工程",school:"北京化工大学",score:558,province:"北京",city:"北京",industry:"biomed",reason:"211高校，生医工实力强，北京就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","social"]},
+  {major:"金融工程",school:"上海财经大学",score:618,province:"上海",city:"上海",industry:"finance",reason:"金融顶尖211，量化方向就业券商/基金",type:"冲刺",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
+  {major:"机器人工程",school:"哈尔滨工程大学",score:555,province:"黑龙江",city:"哈尔滨",industry:"robot",reason:"船舶+机器人特色211，国防背景",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"飞行器设计与工程",school:"南京航空航天大学",score:568,province:"江苏",city:"南京",industry:"aerospace",reason:"航空特色211，就业航空工业集团",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"储能科学与工程",school:"中国石油大学(华东)",score:552,province:"山东",city:"青岛",industry:"newenergy",reason:"211高校，储能新兴方向，未来10年高潜力",type:"稳妥",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"电子科学与技术",school:"福州大学",score:568,province:"福建",city:"福州",industry:"semiconductor",reason:"211，电子方向强，福建电子信息产业发达",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"新能源材料与器件",school:"武汉理工大学",score:565,province:"湖北",city:"武汉",industry:"newenergy",reason:"材料+新能源交叉，211性价比高",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
+  {major:"通信工程",school:"西南交通大学",score:570,province:"四川",city:"成都",industry:"ai",reason:"211，通信老牌强校，就业华为/中兴/运营商",type:"稳妥",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"海洋工程与技术",school:"大连理工大学",score:572,province:"辽宁",city:"大连",industry:"newenergy",reason:"985，海洋+能源交叉，平台型大学",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"电子信息工程",school:"郑州大学",score:555,province:"河南",city:"郑州",industry:"semiconductor",reason:"211，中原地区电子强校，性价比高",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"智能制造工程",school:"北京工业大学",score:570,province:"北京",city:"北京",industry:"robot",reason:"211，智能制造新方向，北京就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"药学",school:"中国药科大学",score:585,province:"江苏",city:"南京",industry:"biomed",reason:"药科211王牌，药学就业强生/恒瑞/药监局",type:"稳妥",combos:["物化生"],traits:["social","analytical"]},
 
   // ---- 一本稳档 (超一本0-40) ----
-  {major:"人工智能",school:"杭州电子科技大学",score:545,province:"浙江",industry:"ai",reason:"AI应用型强校，地处杭州互联网腹地，就业极佳",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"软件工程",school:"天津工业大学",score:538,province:"天津",industry:"ai",reason:"双一流，软件工程就业广，天津/北京双城就业",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["practical","creative"]},
-  {major:"网络空间安全",school:"杭州电子科技大学",score:542,province:"浙江",industry:"ai",reason:"网络安全热门方向，就业阿里/安全企业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"电子科学与技术",school:"中北大学",score:505,province:"山西",industry:"semiconductor",reason:"兵工背景，微电子方向有特色，性价比高",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"新能源汽车工程",school:"江苏大学",score:530,province:"江苏",industry:"auto",reason:"汽车工程强校，新能源方向，长三角就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"生物制药",school:"天津理工大学",score:520,province:"天津",industry:"biomed",reason:"生物制药新兴方向，京津冀医药企业就业",type:"稳妥",combos:["物化生"],traits:["analytical"]},
-  {major:"药学",school:"山西医科大学",score:505,province:"山西",industry:"biomed",reason:"省内医学强校，药学就业医院/药企，稳定有意义",type:"保底",combos:["物化生","物化政"],traits:["social"]},
-  {major:"自动化",school:"太原科技大学",score:498,province:"山西",industry:"robot",reason:"自动化传统方向，机器人转型，就业制造业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"信息管理与信息系统",school:"太原理工大学",score:528,province:"山西",industry:"finance",reason:"211，管理+技术交叉，就业金融科技",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
-  {major:"航空航天工程",school:"中北大学",score:500,province:"山西",industry:"aerospace",reason:"兵工背景，航空航天特色，就业航天企业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"能源与动力工程",school:"太原理工大学",score:522,province:"山西",industry:"newenergy",reason:"211，能源方向传统强项，转型新能源有优势",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
-  {major:"机器人工程",school:"安徽工程大学",score:510,province:"安徽",industry:"robot",reason:"机器人新兴专业，安徽工业机器人产业发达",type:"稳妥",combos:["物化生","物化地"],traits:["practical","creative"]},
-  {major:"医疗器械工程",school:"上海理工大学",score:535,province:"上海",industry:"medical",reason:"医疗器械强校，上海就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
-  {major:"计算机科学与技术",school:"西安邮电大学",score:536,province:"陕西",industry:"ai",reason:"计算机热门院校，就业西安/北京/深圳互联网",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
-  {major:"智能科学与技术",school:"太原理工大学",score:520,province:"山西",industry:"ai",reason:"省内211，保研机会多，性价比高",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"数据科学与大数据技术",school:"山西大学",score:515,province:"山西",industry:"ai",reason:"省内双一流，大数据方向，就业面广",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
-  {major:"金融工程",school:"山西财经大学",score:508,province:"山西",industry:"finance",reason:"省内金融强校，量化方向，就业银行/证券",type:"保底",combos:["物化生","物化政","物化地"],traits:["analytical","social"]},
-  {major:"汽车服务工程",school:"中北大学",score:495,province:"山西",industry:"auto",reason:"省内保底，汽车产业转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"人工智能",school:"杭州电子科技大学",score:545,province:"浙江",city:"杭州",industry:"ai",reason:"AI应用型强校，地处杭州互联网腹地，就业极佳",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"软件工程",school:"天津工业大学",score:538,province:"天津",city:"天津",industry:"ai",reason:"双一流，软件工程就业广，天津/北京双城就业",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["practical","creative"]},
+  {major:"网络空间安全",school:"杭州电子科技大学",score:542,province:"浙江",city:"杭州",industry:"ai",reason:"网络安全热门方向，就业阿里/安全企业",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"电子科学与技术",school:"中北大学",score:505,province:"山西",city:"太原",industry:"semiconductor",reason:"兵工背景，微电子方向有特色，性价比高",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"新能源汽车工程",school:"江苏大学",score:530,province:"江苏",city:"镇江",industry:"auto",reason:"汽车工程强校，新能源方向，长三角就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"生物制药",school:"天津理工大学",score:520,province:"天津",city:"天津",industry:"biomed",reason:"生物制药新兴方向，京津冀医药企业就业",type:"稳妥",combos:["物化生"],traits:["analytical"]},
+  {major:"药学",school:"山西医科大学",score:505,province:"山西",city:"太原",industry:"biomed",reason:"省内医学强校，药学就业医院/药企，稳定有意义",type:"保底",combos:["物化生","物化政"],traits:["social"]},
+  {major:"自动化",school:"太原科技大学",score:498,province:"山西",city:"太原",industry:"robot",reason:"自动化传统方向，机器人转型，就业制造业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"信息管理与信息系统",school:"太原理工大学",score:528,province:"山西",city:"太原",industry:"finance",reason:"211，管理+技术交叉，就业金融科技",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","leadership"]},
+  {major:"航空航天工程",school:"中北大学",score:500,province:"山西",city:"太原",industry:"aerospace",reason:"兵工背景，航空航天特色，就业航天企业",type:"保底",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"能源与动力工程",school:"太原理工大学",score:522,province:"山西",city:"太原",industry:"newenergy",reason:"211，能源方向传统强项，转型新能源有优势",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"机器人工程",school:"安徽工程大学",score:510,province:"安徽",city:"合肥",industry:"robot",reason:"机器人新兴专业，安徽工业机器人产业发达",type:"稳妥",combos:["物化生","物化地"],traits:["practical","creative"]},
+  {major:"医疗器械工程",school:"上海理工大学",score:535,province:"上海",city:"上海",industry:"medical",reason:"医疗器械强校，上海就业优势",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
+  {major:"计算机科学与技术",school:"西安邮电大学",score:536,province:"陕西",city:"西安",industry:"ai",reason:"计算机热门院校，就业西安/北京/深圳互联网",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["analytical","creative"]},
+  {major:"智能科学与技术",school:"太原理工大学",score:520,province:"山西",city:"太原",industry:"ai",reason:"省内211，保研机会多，性价比高",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"数据科学与大数据技术",school:"山西大学",score:515,province:"山西",city:"太原",industry:"ai",reason:"省内双一流，大数据方向，就业面广",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"金融工程",school:"山西财经大学",score:508,province:"山西",city:"太原",industry:"finance",reason:"省内金融强校，量化方向，就业银行/证券",type:"保底",combos:["物化生","物化政","物化地"],traits:["analytical","social"]},
+  {major:"汽车服务工程",school:"中北大学",score:495,province:"山西",city:"太原",industry:"auto",reason:"省内保底，汽车产业转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"电气工程及其自动化",school:"沈阳工业大学",score:525,province:"辽宁",city:"沈阳",industry:"newenergy",reason:"电气强校，东北老牌工科，新能源+电网就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"通信工程",school:"西安邮电大学",score:532,province:"陕西",city:"西安",industry:"ai",reason:"通信特色院校，就业华为/中兴/运营商",type:"稳妥",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"生物技术",school:"湖南农业大学",score:510,province:"湖南",city:"长沙",industry:"biomed",reason:"生物技术方向，对接生物医药产业链",type:"保底",combos:["物化生"],traits:["analytical"]},
+  {major:"大数据管理与应用",school:"广东财经大学",score:515,province:"广东",city:"广州",industry:"finance",reason:"财经院校大数据方向，广深就业",type:"稳妥",combos:["物化生","物化政"],traits:["analytical","leadership"]},
+  {major:"数字媒体技术",school:"浙江传媒学院",score:505,province:"浙江",city:"杭州",industry:"media",reason:"数字创意方向，杭州文创产业发达",type:"保底",combos:["物化生","物化政","物生地"],traits:["creative"]},
 
   // ---- 一本冲档 (低于一本0-30) ----
-  {major:"软件工程",school:"太原科技大学",score:488,province:"山西",industry:"ai",reason:"省内保底，软件工程就业广",type:"保底",combos:["物化生","物化地"],traits:["practical","creative"]},
-  {major:"电气工程及其自动化",school:"沈阳工业大学",score:490,province:"辽宁",industry:"newenergy",reason:"电气强校，新能源+电网就业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
-  {major:"电子信息工程",school:"长春理工大学",score:492,province:"吉林",industry:"semiconductor",reason:"光电特色，电子方向就业半导体企业",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"制药工程",school:"河北科技大学",score:485,province:"河北",industry:"biomed",reason:"制药方向，京津冀药企就业",type:"保底",combos:["物化生"],traits:["analytical","social"]},
-  {major:"机械设计制造及其自动化",school:"河南科技大学",score:488,province:"河南",industry:"robot",reason:"机械强校，机器人转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
-  {major:"飞行器制造工程",school:"沈阳航空航天大学",score:495,province:"辽宁",industry:"aerospace",reason:"航空特色院校，就业航空工业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"软件工程",school:"太原科技大学",score:488,province:"山西",city:"太原",industry:"ai",reason:"省内保底，软件工程就业广",type:"保底",combos:["物化生","物化地"],traits:["practical","creative"]},
+  {major:"电气工程及其自动化",school:"沈阳工业大学",score:490,province:"辽宁",city:"沈阳",industry:"newenergy",reason:"电气强校，新能源+电网就业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"电子信息工程",school:"长春理工大学",score:492,province:"吉林",city:"长春",industry:"semiconductor",reason:"光电特色，电子方向就业半导体企业",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"制药工程",school:"河北科技大学",score:485,province:"河北",city:"石家庄",industry:"biomed",reason:"制药方向，京津冀药企就业",type:"保底",combos:["物化生"],traits:["analytical","social"]},
+  {major:"机械设计制造及其自动化",school:"河南科技大学",score:488,province:"河南",city:"洛阳",industry:"robot",reason:"机械强校，机器人转型方向",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"飞行器制造工程",school:"沈阳航空航天大学",score:495,province:"辽宁",city:"沈阳",industry:"aerospace",reason:"航空特色院校，就业航空工业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"土木工程",school:"兰州理工大学",score:480,province:"甘肃",city:"兰州",industry:"env",reason:"土木传统强校，西北建设需求大",type:"保底",combos:["物化生"],traits:["practical"]},
+  {major:"新能源材料与器件",school:"河南理工大学",score:485,province:"河南",city:"焦作",industry:"newenergy",reason:"材料强校，新能源材料方向",type:"保底",combos:["物化生"],traits:["analytical"]},
+  {major:"电子信息科学与技术",school:"昆明理工大学",score:483,province:"云南",city:"昆明",industry:"semiconductor",reason:"西南工科强校，电子类就业本地/深圳",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"轨道交通信号与控制",school:"兰州交通大学",score:478,province:"甘肃",city:"兰州",industry:"robot",reason:"铁道特色院校，轨道交通自动化",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
 
   // ---- 二本核心档 ----
-  {major:"计算机科学与技术",school:"太原工业学院",score:460,province:"山西",industry:"ai",reason:"省内二本，计算机方向就业可去本地IT企业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
-  {major:"电气工程及其自动化",school:"运城学院",score:445,province:"山西",industry:"newenergy",reason:"省内二本，电气方向可考国网",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
-  {major:"数据科学与大数据技术",school:"长治学院",score:440,province:"山西",industry:"ai",reason:"省内二本，大数据方向，考研/就业均可",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
-  {major:"机械电子工程",school:"湖南工学院",score:455,province:"湖南",industry:"robot",reason:"机电方向，机器人产业应用",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"计算机科学与技术",school:"太原工业学院",score:460,province:"山西",city:"太原",industry:"ai",reason:"省内二本，计算机方向就业可去本地IT企业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"电气工程及其自动化",school:"运城学院",score:445,province:"山西",city:"运城",industry:"newenergy",reason:"省内二本，电气方向可考国网",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"数据科学与大数据技术",school:"长治学院",score:440,province:"山西",city:"长治",industry:"ai",reason:"省内二本，大数据方向，考研/就业均可",type:"保底",combos:["物化生","物化地"],traits:["analytical"]},
+  {major:"机械电子工程",school:"湖南工学院",score:455,province:"湖南",city:"衡阳",industry:"robot",reason:"机电方向，机器人产业应用",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"食品科学与工程",school:"青岛农业大学",score:450,province:"山东",city:"青岛",industry:"biomed",reason:"食品科学方向，对接食品工业",type:"保底",combos:["物化生"],traits:["analytical"]},
+  {major:"软件工程",school:"南昌理工学院",score:448,province:"江西",city:"南昌",industry:"ai",reason:"软件方向，毕业可去南昌/深圳IT",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"生物工程",school:"湖北工业大学",score:465,province:"湖北",city:"武汉",industry:"biomed",reason:"生物工程方向，武汉生物城就业",type:"保底",combos:["物化生"],traits:["analytical"]},
+  {major:"新能源科学与工程",school:"辽宁科技大学",score:458,province:"辽宁",city:"鞍山",industry:"newenergy",reason:"钢铁+新能源转型，东北就业",type:"保底",combos:["物化生","物化地"],traits:["practical"]},
+  {major:"物联网工程",school:"郑州轻工业大学",score:462,province:"河南",city:"郑州",industry:"ai",reason:"物联网新兴专业，郑州本地IT就业",type:"保底",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"医学检验技术",school:"新乡医学院",score:460,province:"河南",city:"新乡",industry:"biomed",reason:"医学检验方向，医院/第三方检验就业",type:"保底",combos:["物化生"],traits:["social"]},
 
   // ---- 额外热门专业（高分段补充）----
-  {major:"临床医学(五年制)",school:"郑州大学",score:600,province:"河南",industry:"biomed",reason:"211医学院，中原地区医学强校",type:"稳妥",combos:["物化生"],traits:["social","analytical"]},
-  {major:"口腔医学",school:"武汉大学",score:650,province:"湖北",industry:"biomed",reason:"口腔顶尖，就业收入高，专业性强",type:"冲刺",combos:["物化生"],traits:["social","practical"]},
-  {major:"微电子科学与工程",school:"西安电子科技大学",score:598,province:"陕西",industry:"semiconductor",reason:"微电子顶尖院校，芯片设计就业海思/中芯",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"电子信息工程",school:"电子科技大学",score:640,province:"四川",industry:"semiconductor",reason:"电子类顶尖985，就业华为/大疆",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
-  {major:"新能源材料与器件",school:"武汉理工大学",score:565,province:"湖北",industry:"newenergy",reason:"材料+新能源交叉，211性价比高",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
-  {major:"智能制造工程",school:"北京工业大学",score:570,province:"北京",industry:"robot",reason:"211，智能制造新方向，北京就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
-  {major:"数字经济",school:"湖南大学",score:590,province:"湖南",industry:"finance",reason:"985，数字经济新兴方向，金融+数据",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["leadership","analytical"]},
-  {major:"应用心理学",school:"华南师范大学",score:555,province:"广东",industry:"social",reason:"211，心理学方向，心理咨询/HR",type:"稳妥",combos:["物化生","物化政","物生政"],traits:["social"]},
+  {major:"临床医学(五年制)",school:"郑州大学",score:600,province:"河南",city:"郑州",industry:"biomed",reason:"211医学院，中原地区医学强校",type:"稳妥",combos:["物化生"],traits:["social","analytical"]},
+  {major:"口腔医学",school:"武汉大学",score:650,province:"湖北",city:"武汉",industry:"biomed",reason:"口腔顶尖，就业收入高，专业性强",type:"冲刺",combos:["物化生"],traits:["social","practical"]},
+  {major:"微电子科学与工程",school:"西安电子科技大学",score:598,province:"陕西",city:"西安",industry:"semiconductor",reason:"微电子顶尖院校，芯片设计就业海思/中芯",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"电子信息工程",school:"电子科技大学",score:640,province:"四川",city:"成都",industry:"semiconductor",reason:"电子类顶尖985，就业华为/大疆",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"新能源材料与器件",school:"武汉理工大学",score:565,province:"湖北",city:"武汉",industry:"newenergy",reason:"材料+新能源交叉，211性价比高",type:"稳妥",combos:["物化生"],traits:["analytical","practical"]},
+  {major:"智能制造工程",school:"北京工业大学",score:570,province:"北京",city:"北京",industry:"robot",reason:"211，智能制造新方向，北京就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"数字经济",school:"湖南大学",score:590,province:"湖南",city:"长沙",industry:"finance",reason:"985，数字经济新兴方向，金融+数据",type:"稳妥",combos:["物化生","物化政","物化地"],traits:["leadership","analytical"]},
+  {major:"应用心理学",school:"华南师范大学",score:555,province:"广东",city:"广州",industry:"media",reason:"211，心理学方向，心理咨询/HR",type:"稳妥",combos:["物化生","物化政","物生政"],traits:["social"]},
+  {major:"能源互联网",school:"重庆大学",score:580,province:"重庆",city:"重庆",industry:"newenergy",reason:"985，能源+互联网交叉前沿",type:"稳妥",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"智能科学与技术",school:"华南理工大学",score:625,province:"广东",city:"广州",industry:"ai",reason:"985工科强校，智能方向大湾区就业",type:"冲刺",combos:["物化生","物化地"],traits:["analytical","practical"]},
+  {major:"建筑学(五年制)",school:"湖南大学",score:585,province:"湖南",city:"长沙",industry:"media",reason:"建筑老四校之一，设计方向",type:"稳妥",combos:["物化生","物化地","物生地"],traits:["creative"]},
+  {major:"统计学",school:"华东师范大学",score:620,province:"上海",city:"上海",industry:"finance",reason:"985师范，统计学强，就业金融科技/互联网数据分析",type:"冲刺",combos:["物化生","物化政"],traits:["analytical","social"]},
+  {major:"船舶与海洋工程",school:"大连理工大学",score:575,province:"辽宁",city:"大连",industry:"env",reason:"造船+海洋工程，大连船舶重工就业",type:"稳妥",combos:["物化生","物化地"],traits:["practical","analytical"]},
+  {major:"护理学",school:"中南大学",score:580,province:"湖南",city:"长沙",industry:"biomed",reason:"湘雅护理全国顶尖，三甲医院就业",type:"稳妥",combos:["物化生","物化政"],traits:["social"]},
+  {major:"环境工程",school:"山东大学",score:590,province:"山东",city:"济南",industry:"env",reason:"985，环境方向+双碳政策受益",type:"稳妥",combos:["物化生"],traits:["analytical","social"]},
+  {major:"工业设计",school:"江南大学",score:565,province:"江苏",city:"无锡",industry:"media",reason:"设计王牌，工业设计+交互设计就业广",type:"稳妥",combos:["物化生","物生地"],traits:["creative"]},
 ];
 
 const SLIDER_LABELS={
@@ -666,7 +729,7 @@ function renderResult(){
   const scoreTier=getScoreTier(answers.province,answers.score);
   const combo=answers.subjectCombo;
 
-  // 筛选匹配的专业：分数±30 + 行业匹配 + 选科兼容 + 排除
+  // 筛选匹配的专业：分数±30 + 行业匹配 + 选科兼容 + 城市偏好 + 排除
   let matched=MAJOR_DB.filter(m=>{
     const scoreMatch=Math.abs(m.score-answers.score)<=30;
     const industryMatch=answers.industries.includes(m.industry);
@@ -675,6 +738,13 @@ function renderResult(){
     const rejectMajor=answers.rejectMajors&&answers.rejectMajors.some(rm=>m.major.includes(rm));
     if(rejectIndustry||rejectMajor)return false;
     if(!comboMatch)return false;
+    // 城市偏好：如果选了具体城市（非"无所谓"），优先匹配意向城市
+    const hasSpecificCities=answers.cities.length>0 && !answers.cities.includes("无所谓");
+    if(hasSpecificCities){
+      if(!answers.cities.includes(m.city))return false;
+    }
+    // 排除城市
+    if(answers.rejectCities&&answers.rejectCities.includes(m.city))return false;
     return scoreMatch&&industryMatch;
   });
 
@@ -685,6 +755,7 @@ function renderResult(){
       const rejectIndustry=answers.rejectIndustries&&answers.rejectIndustries.includes(m.industry);
       const rejectMajor=answers.rejectMajors&&answers.rejectMajors.some(rm=>m.major.includes(rm));
       if(rejectIndustry||rejectMajor)return false;
+      if(answers.rejectCities&&answers.rejectCities.includes(m.city))return false;
       return comboMatch;
     }).sort((a,b)=>Math.abs(a.score-answers.score)-Math.abs(b.score-answers.score)).slice(0,10);
   }
@@ -756,8 +827,8 @@ function renderResult(){
   // Disclaimer
   html+='<div style="text-align:center;padding:20px 0 10px;font-size:11px;color:rgba(255,255,255,.3);line-height:1.6">\u26a0\ufe0f 以上推荐仅供参考，录取分数线每年波动，请以各省教育考试院和高校官方发布为准。<br>建议结合位次、选科要求、专业真实情况综合判断。</div>';
 
-  // Restart
-  html+='<div class="restart-wrap"><button class="btn btn-back" onclick="location.reload()">\ud83d\udd04 重新测试</button></div>';
+  // Restart + Export
+  html+='<div class="restart-wrap" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-primary" onclick="exportResult()" style="background:linear-gradient(135deg,#ffd740,#ff9100);color:#05051a;box-shadow:0 4px 20px rgba(255,215,64,.3)">\ud83d\udcf8 导出保存</button><button class="btn btn-back" onclick="location.reload()">\ud83d\udd04 重新测试</button></div>';
 
   document.getElementById("result-page").classList.remove("hidden");
   document.getElementById("result-page").innerHTML=html;
@@ -806,6 +877,68 @@ function toggleRankMode(){
 }
 // Init mode style
 toggleRankMode();
+
+// ===== 导出结果功能 =====
+function exportResult(){
+  const resultPage=document.getElementById("result-page");
+  if(!resultPage||resultPage.classList.contains("hidden")){
+    showToast("请先完成测评生成报告");
+    return;
+  }
+
+  // Show loading toast
+  showToast("正在生成导出图片...");
+
+  // Check if html2canvas is available
+  if(typeof html2canvas==="undefined"){
+    // Fallback: try to load it
+    const script=document.createElement("script");
+    script.src="https://html2canvas.hertzen.com/dist/html2canvas.min.js";
+    script.onload=function(){doExport(resultPage);};
+    script.onerror=function(){
+      showToast("图片导出加载失败，请检查网络连接后重试");
+    };
+    document.head.appendChild(script);
+    return;
+  }
+  doExport(resultPage);
+}
+
+function doExport(resultPage){
+  // Hide the export/restart buttons temporarily for clean capture
+  const btns=resultPage.querySelector(".restart-wrap");
+  if(btns)btns.style.display="none";
+
+  // Capture with html2canvas
+  html2canvas(resultPage,{
+    backgroundColor:"#05051a",
+    scale:2,
+    logging:false,
+    useCORS:true,
+    allowTaint:true
+  }).then(function(canvas){
+    // Restore buttons
+    if(btns)btns.style.display="";
+
+    // Generate filename
+    const name=answers.name||"同学";
+    const now=new Date();
+    const dateStr=now.getFullYear()+""+(now.getMonth()+1).toString().padStart(2,"0")+now.getDate().toString().padStart(2,"0");
+    const filename=name+"_高考志愿规划_"+dateStr+".png";
+
+    // Trigger download
+    const link=document.createElement("a");
+    link.download=filename;
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+
+    showToast("\u2705 报告已保存为图片！");
+  }).catch(function(e){
+    if(btns)btns.style.display="";
+    console.error("Export error:",e);
+    showToast("导出失败，请尝试截图保存");
+  });
+}
 
 </script>
 </body>
